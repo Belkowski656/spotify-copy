@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import logo from "../../resources/images/SpotifyBlack.png";
-
-import Option from "../Option/Option";
 
 import {
   Logo,
@@ -15,18 +15,15 @@ import {
   Label,
   Input,
   Birth,
-  BirthWrapper,
   TextBold,
   TextNormal,
-  Select,
   Gender,
   InputGender,
   InputCheckBox,
   Submit,
   Container,
   TextBig,
-  InputDay,
-  InputYear,
+  Date,
   GenderWrapper,
   TextGender,
   LabelGender,
@@ -35,220 +32,121 @@ import {
 } from "./SignUp.style";
 
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [confirmEmail, setConfirmEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [sex, setSex] = useState("");
-  const [accept, setAccept] = useState("");
-
-  const [day, setDay] = useState("");
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
-
-  const [emailError, setEmailError] = useState(true);
-  const [confirmEmailError, setConfirmEmailError] = useState(true);
-  const [passwordError, setPasswordError] = useState(true);
-  const [usernameError, setUsernameError] = useState(true);
-  const [dateError, setDateError] = useState(true);
-
-  const months = [
-    "Month",
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const validateEmail = () => {
-    if (!email.includes("@") || email === "") {
-      setEmailError(true);
-    } else {
-      setEmailError(false);
-    }
-  };
-
-  const validateConfirmEmail = () => {
-    if (
-      !confirmEmail.includes("@") ||
-      confirmEmail === "" ||
-      confirmEmail !== email
-    ) {
-      setConfirmEmailError(true);
-    } else {
-      setConfirmEmailError(false);
-    }
-  };
-
-  const validatePassword = () => {
-    if (password === "" || password.length < 8) {
-      setPasswordError(true);
-    } else {
-      setPasswordError(false);
-    }
-  };
-
-  const validateUsername = () => {
-    if (username === "" || username.length < 3) {
-      setUsernameError(true);
-    } else {
-      setUsernameError(false);
-    }
-  };
-
-  const validateDate = () => {
-    if (
-      day * 1 < 1 ||
-      day * 1 > 31 ||
-      month === "Month" ||
-      year * 1 > 2021 ||
-      year.length < 4
-    ) {
-      setDateError(true);
-    } else {
-      setDateError(false);
-    }
-  };
-
-  const options = months.map((month, i) => {
-    return <Option key={i} month={month} />;
+  let schema = yup.object().shape({
+    email: yup
+      .string("Invalid email.The correct format is example@email.com")
+      .email("Invalid email.The correct format is example@email.com")
+      .required("Enter your email"),
+    confirmEmail: yup
+      .string("Invalid email.The correct format is example@email.com")
+      .oneOf([yup.ref("email"), null], "Emails are not the same")
+      .required("Confirm your email"),
+    password: yup
+      .string(
+        "Password must contain one uppercase, one lowercase, one number and one special case character"
+      )
+      .min(8, "Password must be at least 8 characters")
+      .max(20, "Password must be at most 20 characters")
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+        "Password must contain one uppercase, one lowercase, one number and one special case character"
+      )
+      .required("Enter your password"),
+    username: yup
+      .string("Invalid username")
+      .min(4, "Password must be at least 4 characters")
+      .max(20, "Password must be at most 20 characters")
+      .required("Enter your username"),
+    checkbox: yup.boolean().oneOf([true], "Please accept terms and conditions"),
+    gender: yup.string().required(),
+    date: yup.date("Enter").required("Enter date of birth"),
   });
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (data) => console.log(data);
+
+  console.log(errors);
   return (
-    <Container>
-      <Logo href="#" img={logo} />
-      <Title>Sign Up for free and start listening.</Title>
-      <Button>Sign Up with Facebook</Button>
-      <Line>Or</Line>
-      <Wrapper>
-        <TextBig>Sign Up with e-mail address</TextBig>
-        <Form>
-          <Label>
-            <Text>Your e-mail address</Text>
-            <Input
-              placeholder={"Enter your e-mail"}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onBlur={validateEmail}
-            />
-            {emailError ? <Error>{"Invalid Email"}</Error> : null}
-          </Label>
-          <Label>
-            <Text>Confirm e-mail address</Text>
-            <Input
-              placeholder={"Enter your e-mail again"}
-              value={confirmEmail}
-              onChange={(e) => setConfirmEmail(e.target.value)}
-              onBlur={validateConfirmEmail}
-            />
-            {confirmEmailError ? (
-              <Error>{"Invalid Confirm Email"}</Error>
-            ) : null}
-          </Label>
-          <Label>
-            <Text>Password</Text>
-            <Input
-              placeholder={"Enter your password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onBlur={validatePassword}
-              type="password"
-            />
-            {passwordError ? <Error>{"Invalid Password"}</Error> : null}
-          </Label>
-          <Label>
-            <Text>Username</Text>
-            <Input
-              placeholder={"Enter your username"}
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              onBlur={validateUsername}
-            />
-            {usernameError ? <Error>{"Invalid Username"}</Error> : null}
-          </Label>
-          <Birth>
-            <TextBold>Enter your date of birth</TextBold>
-            <BirthWrapper>
+    <>
+      <Container>
+        <Logo href="#" img={logo} />
+        <Title>Sign Up for free and start listening.</Title>
+        <Button>Sign Up with Facebook</Button>
+        <Line>Or</Line>
+        <Wrapper>
+          <TextBig>Sign Up with e-mail address</TextBig>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Label>
+              <Text>Your e-mail address</Text>
+              <Input placeholder={"Enter your e-mail"} {...register("email")} />
+            </Label>
+            <Label>
+              <Text>Confirm e-mail address</Text>
+              <Input
+                placeholder={"Enter your e-mail again"}
+                {...register("confirmEmail")}
+              />
+            </Label>
+            <Label>
+              <Text>Password</Text>
+              <Input
+                placeholder={"Enter your password"}
+                type="password"
+                {...register("password")}
+              />
+            </Label>
+            <Label>
+              <Text>Username</Text>
+              <Input
+                placeholder={"Enter your username"}
+                {...register("username")}
+              />
+            </Label>
+            <Birth>
+              <TextBold>Enter your date of birth</TextBold>
               <Label>
-                <TextNormal>Day</TextNormal>
-                <InputDay
-                  placeholder={"DD"}
-                  value={day}
-                  onChange={(e) => setDay(e.target.value)}
-                  onBlur={validateDate}
-                  type="number"
-                />
+                <Date type="date" {...register("date")} />
               </Label>
-              <Label>
-                <TextNormal>Month</TextNormal>
-                <Select
-                  value={month}
-                  onChange={(e) => setMonth(e.target.value)}
-                  onBlur={validateDate}
-                >
-                  {options}
-                </Select>
-              </Label>
-              <Label>
-                <TextNormal>Year</TextNormal>
-                <InputYear
-                  placeholder={"YYYY"}
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                  onBlur={validateDate}
-                  type="number"
-                />
-              </Label>
-            </BirthWrapper>
-            {dateError ? <Error>{"Invalid Date"}</Error> : null}
-          </Birth>
-          <Gender>
-            <TextGender>Your gender?</TextGender>
-            <GenderWrapper>
-              <LabelGender>
-                <InputGender
-                  type="radio"
-                  checked={sex === "male" ? true : false}
-                  onChange={(e) => setSex(e.target.value)}
-                  name="gender"
-                  value="male"
-                />
-                <TextNormal>Male</TextNormal>
-              </LabelGender>
-              <LabelGender>
-                <InputGender
-                  checked={sex === "female" ? true : false}
-                  onChange={(e) => setSex(e.target.value)}
-                  type="radio"
-                  name="gender"
-                  value="female"
-                />
-                <TextNormal>Female</TextNormal>
-              </LabelGender>
+            </Birth>
+            <Gender>
+              <TextGender>Your gender?</TextGender>
+              <GenderWrapper>
+                <LabelGender>
+                  <InputGender
+                    type="radio"
+                    value="male"
+                    {...register("gender")}
+                  />
+                  <TextNormal>Male</TextNormal>
+                </LabelGender>
+                <LabelGender>
+                  <InputGender
+                    type="radio"
+                    value="female"
+                    {...register("gender")}
+                  />
+                  <TextNormal>Female</TextNormal>
+                </LabelGender>
+                <Error></Error>
+              </GenderWrapper>
+            </Gender>
+            <LabelCheckBox>
+              <InputCheckBox type="checkbox" {...register("checkbox")} />
+              <TextNormal>I accept the terms and conditions.</TextNormal>
               <Error></Error>
-            </GenderWrapper>
-          </Gender>
-          <LabelCheckBox>
-            <InputCheckBox
-              type="checkbox"
-              checked={accept}
-              onChange={(e) => setAccept(e.target.value)}
-            />
-            <TextNormal>I accept the terms and conditions.</TextNormal>
-            <Error></Error>
-          </LabelCheckBox>
-          <Submit>Sign Up</Submit>
-        </Form>
-      </Wrapper>
-    </Container>
+            </LabelCheckBox>
+            <Submit type="submit">Sign Up</Submit>
+          </Form>
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 

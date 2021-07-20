@@ -102,16 +102,11 @@ export const Input = styled.input`
 export const TextBold = styled.p`
   font-weight: bold;
   font-size: 14px;
+  text-align: left;
 `;
 
 export const Birth = styled.div`
   margin-top: 40px;
-`;
-
-export const BirthWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
 `;
 
 export const TextNormal = styled.p`
@@ -119,50 +114,13 @@ export const TextNormal = styled.p`
   font-size: 14px;
 `;
 
-export const InputDay = styled.input`
-  height: 50px;
-  width: 50px;
-  padding: 0 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid black;
-
-  ::placeholder {
-    outline: black;
+export const Date = styled.input`
+  margin: 10px auto;
+  width: 100%;
+  ::-webkit-datetime-edit {
+    padding: 10px;
     font-size: 16px;
-    color: #8e8e8e;
   }
-
-  :focus {
-    outline-color: black;
-  }
-`;
-
-export const InputYear = styled.input`
-  height: 50px;
-  width: 80px;
-  padding: 0 15px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid black;
-
-  ::placeholder {
-    outline: black;
-    font-size: 16px;
-    color: #8e8e8e;
-  }
-
-  :focus {
-    outline-color: black;
-  }
-`;
-
-export const Select = styled.select`
-  height: 50px;
-  font-size: 16px;
-  color: #8e8e8e;
-  padding: 0 20px;
-
   :focus {
     outline-color: black;
   }
