@@ -9,13 +9,15 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div``;
 
-export const Logo = styled.div`
+export const Logo = styled.a`
+  display: block;
   background-image: url(${({ img }) => img});
   width: 120px;
   height: 50px;
   background-size: contain;
   background-repeat: no-repeat;
   margin: 0 auto;
+  cursor: pointer;
 `;
 
 export const Title = styled.h2`
@@ -32,6 +34,7 @@ export const Button = styled.button`
   font-size: 16px;
   font-weight: bold;
   margin: 10px 0;
+  cursor: pointer;
 `;
 
 export const Line = styled.div`
@@ -206,4 +209,5 @@ export const Submit = styled.button`
   padding: 15px 50px;
   margin: 30px auto;
   border-radius: 25px;
+  cursor: pointer;
 `;

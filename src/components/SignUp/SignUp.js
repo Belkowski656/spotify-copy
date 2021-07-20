@@ -38,6 +38,8 @@ const SignUp = () => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [sex, setSex] = useState("");
+  const [accept, setAccept] = useState("");
 
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
@@ -85,6 +87,18 @@ const SignUp = () => {
     setYear(year);
   };
 
+  const handleChangeSex = (e) => {
+    const sex = e.target.value;
+
+    setSex(sex);
+  };
+
+  const handleChangeAccept = (e) => {
+    const accept = e.target.value;
+
+    setAccept(accept);
+  };
+
   const months = [
     "Month",
     "January",
@@ -107,7 +121,7 @@ const SignUp = () => {
 
   return (
     <Container>
-      <Logo img={logo} />
+      <Logo href="#" img={logo} />
       <Title>Sign Up for free and start listening.</Title>
       <Button>Sign Up with Facebook</Button>
       <Line>Or</Line>
@@ -182,7 +196,8 @@ const SignUp = () => {
               <LabelGender>
                 <InputGender
                   type="radio"
-                  checked={true}
+                  checked={sex === "male" ? true : false}
+                  onChange={handleChangeSex}
                   name="gender"
                   value="male"
                 />
@@ -190,7 +205,8 @@ const SignUp = () => {
               </LabelGender>
               <LabelGender>
                 <InputGender
-                  checked={false}
+                  checked={sex === "female" ? true : false}
+                  onChange={handleChangeSex}
                   type="radio"
                   name="gender"
                   value="female"
@@ -200,7 +216,11 @@ const SignUp = () => {
             </GenderWrapper>
           </Gender>
           <LabelCheckBox>
-            <InputCheckBox type="checkbox" checked={false} />
+            <InputCheckBox
+              type="checkbox"
+              checked={accept}
+              onChange={handleChangeAccept}
+            />
             <TextNormal>I accept the terms and conditions.</TextNormal>
           </LabelCheckBox>
           <Submit>Sign Up</Submit>
