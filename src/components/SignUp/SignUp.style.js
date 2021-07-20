@@ -211,3 +211,9 @@ export const Submit = styled.button`
   border-radius: 25px;
   cursor: pointer;
 `;
+
+export const Error = styled.p`
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+`;

@@ -31,6 +31,7 @@ import {
   TextGender,
   LabelGender,
   LabelCheckBox,
+  Error,
 } from "./SignUp.style";
 
 const SignUp = () => {
@@ -45,59 +46,11 @@ const SignUp = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
 
-  const handleChangeEmail = (e) => {
-    const email = e.target.value;
-
-    setEmail(email);
-  };
-
-  const handleChangeConfirmEmail = (e) => {
-    const confirmEmail = e.target.value;
-
-    setConfirmEmail(confirmEmail);
-  };
-
-  const handleChangePassword = (e) => {
-    const password = e.target.value;
-
-    setPassword(password);
-  };
-
-  const handleChangeUsername = (e) => {
-    const username = e.target.value;
-
-    setUsername(username);
-  };
-
-  const handleChangeDay = (e) => {
-    const day = e.target.value;
-
-    setDay(day);
-  };
-
-  const handleChangeMonth = (e) => {
-    const month = e.target.value;
-
-    setMonth(month);
-  };
-
-  const handleChangeYear = (e) => {
-    const year = e.target.value;
-
-    setYear(year);
-  };
-
-  const handleChangeSex = (e) => {
-    const sex = e.target.value;
-
-    setSex(sex);
-  };
-
-  const handleChangeAccept = (e) => {
-    const accept = e.target.value;
-
-    setAccept(accept);
-  };
+  const [emailError, setEmailError] = useState(true);
+  const [confirmEmailError, setConfirmEmailError] = useState(true);
+  const [passwordError, setPasswordError] = useState(true);
+  const [usernameError, setUsernameError] = useState(true);
+  const [dateError, setDateError] = useState(true);
 
   const months = [
     "Month",
@@ -114,6 +67,56 @@ const SignUp = () => {
     "November",
     "December",
   ];
+
+  const validateEmail = () => {
+    if (!email.includes("@") || email === "") {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+  };
+
+  const validateConfirmEmail = () => {
+    if (
+      !confirmEmail.includes("@") ||
+      confirmEmail === "" ||
+      confirmEmail !== email
+    ) {
+      setConfirmEmailError(true);
+    } else {
+      setConfirmEmailError(false);
+    }
+  };
+
+  const validatePassword = () => {
+    if (password === "" || password.length < 8) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
+  };
+
+  const validateUsername = () => {
+    if (username === "" || username.length < 3) {
+      setUsernameError(true);
+    } else {
+      setUsernameError(false);
+    }
+  };
+
+  const validateDate = () => {
+    if (
+      day * 1 < 1 ||
+      day * 1 > 31 ||
+      month === "Month" ||
+      year * 1 > 2021 ||
+      year.length < 4
+    ) {
+      setDateError(true);
+    } else {
+      setDateError(false);
+    }
+  };
 
   const options = months.map((month, i) => {
     return <Option key={i} month={month} />;
@@ -133,33 +136,43 @@ const SignUp = () => {
             <Input
               placeholder={"Enter your e-mail"}
               value={email}
-              onChange={handleChangeEmail}
+              onChange={(e) => setEmail(e.target.value)}
+              onBlur={validateEmail}
             />
+            {emailError ? <Error>{"Invalid Email"}</Error> : null}
           </Label>
           <Label>
             <Text>Confirm e-mail address</Text>
             <Input
               placeholder={"Enter your e-mail again"}
               value={confirmEmail}
-              onChange={handleChangeConfirmEmail}
+              onChange={(e) => setConfirmEmail(e.target.value)}
+              onBlur={validateConfirmEmail}
             />
+            {confirmEmailError ? (
+              <Error>{"Invalid Confirm Email"}</Error>
+            ) : null}
           </Label>
           <Label>
             <Text>Password</Text>
             <Input
               placeholder={"Enter your password"}
               value={password}
-              onChange={handleChangePassword}
+              onChange={(e) => setPassword(e.target.value)}
+              onBlur={validatePassword}
               type="password"
             />
+            {passwordError ? <Error>{"Invalid Password"}</Error> : null}
           </Label>
           <Label>
             <Text>Username</Text>
             <Input
               placeholder={"Enter your username"}
               value={username}
-              onChange={handleChangeUsername}
+              onChange={(e) => setUsername(e.target.value)}
+              onBlur={validateUsername}
             />
+            {usernameError ? <Error>{"Invalid Username"}</Error> : null}
           </Label>
           <Birth>
             <TextBold>Enter your date of birth</TextBold>
@@ -169,13 +182,18 @@ const SignUp = () => {
                 <InputDay
                   placeholder={"DD"}
                   value={day}
-                  onChange={handleChangeDay}
+                  onChange={(e) => setDay(e.target.value)}
+                  onBlur={validateDate}
                   type="number"
                 />
               </Label>
               <Label>
                 <TextNormal>Month</TextNormal>
-                <Select value={month} onChange={handleChangeMonth}>
+                <Select
+                  value={month}
+                  onChange={(e) => setMonth(e.target.value)}
+                  onBlur={validateDate}
+                >
                   {options}
                 </Select>
               </Label>
@@ -184,11 +202,13 @@ const SignUp = () => {
                 <InputYear
                   placeholder={"YYYY"}
                   value={year}
-                  onChange={handleChangeYear}
+                  onChange={(e) => setYear(e.target.value)}
+                  onBlur={validateDate}
                   type="number"
                 />
               </Label>
             </BirthWrapper>
+            {dateError ? <Error>{"Invalid Date"}</Error> : null}
           </Birth>
           <Gender>
             <TextGender>Your gender?</TextGender>
@@ -197,7 +217,7 @@ const SignUp = () => {
                 <InputGender
                   type="radio"
                   checked={sex === "male" ? true : false}
-                  onChange={handleChangeSex}
+                  onChange={(e) => setSex(e.target.value)}
                   name="gender"
                   value="male"
                 />
@@ -206,22 +226,24 @@ const SignUp = () => {
               <LabelGender>
                 <InputGender
                   checked={sex === "female" ? true : false}
-                  onChange={handleChangeSex}
+                  onChange={(e) => setSex(e.target.value)}
                   type="radio"
                   name="gender"
                   value="female"
                 />
                 <TextNormal>Female</TextNormal>
               </LabelGender>
+              <Error></Error>
             </GenderWrapper>
           </Gender>
           <LabelCheckBox>
             <InputCheckBox
               type="checkbox"
               checked={accept}
-              onChange={handleChangeAccept}
+              onChange={(e) => setAccept(e.target.value)}
             />
             <TextNormal>I accept the terms and conditions.</TextNormal>
+            <Error></Error>
           </LabelCheckBox>
           <Submit>Sign Up</Submit>
         </Form>
