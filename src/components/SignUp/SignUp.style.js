@@ -114,7 +114,7 @@ export const TextNormal = styled.p`
   font-size: 14px;
 `;
 
-export const Date = styled.input`
+export const DateInput = styled.input`
   margin: 10px auto;
   width: 100%;
   ::-webkit-datetime-edit {
