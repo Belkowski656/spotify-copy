@@ -31,12 +31,14 @@ export const Logo = styled.a`
     height: 40px;
   }
 `;
+
 export const HamburgerWrapper = styled.div`
   position: relative;
   width: 30px;
   height: 30px;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
+  cursor: pointer;
 
   ::after,
   ::before {
@@ -91,6 +93,7 @@ export const Menu = styled.ul`
   height: 100vh;
   padding: 100px 30px;
   transition: 0.3s ease;
+  z-index: 1;
 
   ${({ active }) => (active ? "transform: translateX(-100%)" : null)};
 
