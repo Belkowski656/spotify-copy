@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   padding: 20px;
   color: white;
   transition: 0.3s;
+  z-index: 1;
   transform: ${({ active }) =>
     active ? "translateX(0)" : "translateX(-100%)"};
 `;
@@ -16,6 +17,9 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+  @media (min-width: 992px) {
+    overflow-y: auto;
+  }
 `;
 
 export const Container = styled.ul`
