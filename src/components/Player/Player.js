@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Wrapper,
   Info,
@@ -29,6 +31,15 @@ import music from "../../resources/music/music.mp3";
 import img from "../../resources/images/image.jpg";
 
 const Player = () => {
+  const [play, setPlay] = useState(false);
+
+  const handlePlay = () => {
+    const player = document.querySelector("#player");
+    setPlay((prev) => !prev);
+
+    if (play) player.play();
+    else player.pause();
+  };
   return (
     <>
       <Wrapper>
@@ -50,9 +61,12 @@ const Player = () => {
             <Previous>
               <i class="fas fa-step-forward"></i>
             </Previous>
-            <Play>
-              <i className="fas fa-play"></i>
-              {/* <i class="fas fa-pause"></i> */}
+            <Play onClick={handlePlay}>
+              {play ? (
+                <i className="fas fa-pause"></i>
+              ) : (
+                <i className="fas fa-play"></i>
+              )}
             </Play>
             <Next>
               <i class="fas fa-step-forward"></i>
