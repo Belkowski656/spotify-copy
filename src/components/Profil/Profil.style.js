@@ -17,6 +17,7 @@ export const Wrapper = styled.div`
   position: fixed;
   top: 20px;
   right: 20px;
+  z-index: 1;
 `;
 
 export const Menu = styled.ul`
@@ -29,7 +30,7 @@ export const Menu = styled.ul`
   border-radius: 5px;
 
   ${({ active }) =>
-    active ? "opacity:1; z-index:auto;" : "opacity:0; z-index:-1;"}
+    active ? "opacity:1; display:block;" : "opacity:0; display:none;"}
 `;
 
 export const Element = styled.li`

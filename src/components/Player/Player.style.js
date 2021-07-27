@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   background-color: #181818;
   border-top: 1px solid #282828;
   padding: 20px;
+  z-index: 1;
 `;
 
 export const Content = styled.div`

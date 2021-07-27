@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   padding: 20px;
   color: white;
   transition: 0.3s;
-  z-index: 1;
+  z-index: 2;
   transform: ${({ active }) =>
     active ? "translateX(0)" : "translateX(-100%)"};
 
