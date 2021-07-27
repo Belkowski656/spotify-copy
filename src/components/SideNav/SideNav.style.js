@@ -36,6 +36,7 @@ export const Element = styled.li`
   font-size: 14px;
   font-weight: bold;
   color: #b3b3b3;
+  cursor: pointer;
   :hover {
     color: white;
   }
@@ -62,6 +63,7 @@ export const Playlist = styled.li`
   font-size: 14px;
   color: #b3b3b3;
   padding: 5px;
+  cursor: pointer;
   :hover {
     color: white;
   }
