@@ -74,6 +74,7 @@ export const Arrow = styled.div`
   color: #b3b3b3;
   font-size: 60px;
   transition: 0.3s;
+  cursor: pointer;
   transform: translateY(-50%)
     ${({ active }) => (active ? "rotate(-90deg)" : "rotate(90deg)")};
 `;
