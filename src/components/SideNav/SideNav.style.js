@@ -11,6 +11,10 @@ export const Wrapper = styled.div`
   z-index: 1;
   transform: ${({ active }) =>
     active ? "translateX(0)" : "translateX(-100%)"};
+
+  @media (min-width: 992px) {
+    height: calc(100vh - 126px);
+  }
 `;
 
 export const Content = styled.div`

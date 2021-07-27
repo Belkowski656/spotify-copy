@@ -60,7 +60,7 @@ const Player = () => {
           </PlayerContainer>
           <Panel>
             <Previous>
-              <i class="fas fa-step-forward"></i>
+              <i className="fas fa-step-forward"></i>
             </Previous>
             <Play onClick={handlePlay}>
               {play ? (
@@ -70,7 +70,7 @@ const Player = () => {
               )}
             </Play>
             <Next>
-              <i class="fas fa-step-forward"></i>
+              <i className="fas fa-step-forward"></i>
             </Next>
             <Progress>
               <Time>0:00</Time>
