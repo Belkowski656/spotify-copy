@@ -62,6 +62,7 @@ export const Title = styled.div`
 export const Like = styled.div`
   margin-left: 20px;
   font-size: 20px;
+  cursor: pointer;
 `;
 
 export const PlayerContainer = styled.audio``;
@@ -91,6 +92,8 @@ export const Play = styled.button`
   border-radius: 50%;
   width: 40px;
   height: 40px;
+  cursor: pointer;
+
   i {
     position: absolute;
     top: 50%;
@@ -108,6 +111,7 @@ export const Previous = styled.button`
   font-size: 18px;
   width: 50px;
   height: 50px;
+  cursor: pointer;
   i {
     position: absolute;
     top: 50%;
@@ -124,6 +128,7 @@ export const Next = styled.button`
   font-size: 18px;
   width: 50px;
   height: 50px;
+  cursor: pointer;
   i {
     position: absolute;
     top: 50%;
@@ -181,6 +186,7 @@ export const Circle = styled.div`
   border-radius: 50%;
   content: "";
   z-index: 1;
+  cursor: pointer;
 `;
 
 export const Time = styled.p`

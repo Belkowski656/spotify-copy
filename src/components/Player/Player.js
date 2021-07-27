@@ -34,8 +34,9 @@ const Player = () => {
   const [play, setPlay] = useState(false);
 
   const handlePlay = () => {
-    const player = document.querySelector("#player");
     setPlay((prev) => !prev);
+
+    const player = document.querySelector("#player");
 
     if (play) player.play();
     else player.pause();
