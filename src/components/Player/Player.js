@@ -16,13 +16,9 @@ import {
   Next,
   Progress,
   Time,
-  ProgressBar,
   ProgressContainer,
-  Circle,
   SoundControl,
-  ProgressBarSound,
   ProgressSound,
-  CircleSound,
   Icon,
   Content,
 } from "./Player.style";
@@ -32,6 +28,10 @@ import img from "../../resources/images/image.jpg";
 
 const Player = () => {
   const [play, setPlay] = useState(false);
+  const [like, setLike] = useState(false);
+
+  const [soundValue, setSoundValue] = useState(50);
+  const [audioValue, setAudioValue] = useState(50);
 
   const handlePlay = () => {
     setPlay((prev) => !prev);
@@ -41,6 +41,15 @@ const Player = () => {
     if (play) player.play();
     else player.pause();
   };
+
+  const handleSoundValueChange = (e) => {
+    setSoundValue(e.target.value);
+  };
+
+  const handleAudioValueChange = (e) => {
+    setAudioValue(e.target.value);
+  };
+
   return (
     <>
       <Wrapper>
@@ -51,7 +60,7 @@ const Player = () => {
               <Title>Example</Title>
               <Name>Example Name</Name>
             </InfoContainer>
-            <Like>
+            <Like like={like} onClick={() => setLike((prev) => !prev)}>
               <i className="far fa-heart"></i>
             </Like>
           </Info>
@@ -74,10 +83,14 @@ const Player = () => {
             </Next>
             <Progress>
               <Time>0:00</Time>
-              <ProgressContainer>
-                <ProgressBar />
-                <Circle />
-              </ProgressContainer>
+              <ProgressContainer
+                type="range"
+                onChange={handleAudioValueChange}
+                min={0}
+                max={100}
+                value={audioValue}
+                progress={audioValue}
+              ></ProgressContainer>
               <Time>3:21</Time>
             </Progress>
           </Panel>
@@ -85,10 +98,14 @@ const Player = () => {
             <Icon>
               <i className="fas fa-volume-down"></i>
             </Icon>
-            <ProgressSound>
-              <ProgressBarSound />
-              <CircleSound />
-            </ProgressSound>
+            <ProgressSound
+              type="range"
+              onChange={handleSoundValueChange}
+              value={soundValue}
+              progress={soundValue}
+              min="0"
+              max="100"
+            />
           </SoundControl>
         </Content>
       </Wrapper>

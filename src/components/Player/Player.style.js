@@ -64,6 +64,7 @@ export const Like = styled.div`
   margin-left: 20px;
   font-size: 20px;
   cursor: pointer;
+  color: ${({ like }) => (like ? "#1db954" : "white")};
 `;
 
 export const PlayerContainer = styled.audio``;
@@ -144,50 +145,25 @@ export const Progress = styled.div`
   align-items: center;
 `;
 
-export const ProgressContainer = styled.div`
-  position: relative;
+export const ProgressContainer = styled.input`
   width: 100%;
-`;
-
-export const ProgressBar = styled.div`
-  position: relative;
-  width: 100%;
+  -webkit-appearance: none;
   height: 4px;
-  background-color: #535353;
   border-radius: 5px;
-  overflow-x: hidden;
+  background: linear-gradient(
+    90deg,
+    #b3b3b3 ${({ progress }) => progress + "%"},
+    #535353 ${({ progress }) => progress + "%"}
+  );
 
-  :hover {
-    ::after {
-      background-color: #1db954;
-    }
+  ::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
   }
-
-  ::after {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-100%);
-    width: 100%;
-    height: 4px;
-    background-color: #b3b3b3;
-    border-radius: 5px;
-    content: "";
-  }
-`;
-
-export const Circle = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 14px;
-  height: 14px;
-  background-color: white;
-  border-radius: 50%;
-  content: "";
-  z-index: 1;
-  cursor: pointer;
 `;
 
 export const Time = styled.p`
@@ -219,51 +195,29 @@ export const Icon = styled.div`
   }
 `;
 
-export const ProgressSound = styled.div`
+export const ProgressSound = styled.input`
   position: relative;
   width: 100%;
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 5px;
+  background: linear-gradient(
+    90deg,
+    #b3b3b3 ${({ progress }) => progress + "%"},
+    #535353 ${({ progress }) => progress + "%"}
+  );
+
+  ::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+  }
+
   @media (min-width: 992px) {
     width: 50%;
     margin: 0 auto;
   }
-`;
-
-export const ProgressBarSound = styled.div`
-  position: relative;
-  width: 100%;
-  height: 4px;
-  background-color: #535353;
-  border-radius: 5px;
-  overflow-x: hidden;
-
-  :hover {
-    ::after {
-      background-color: #1db954;
-    }
-  }
-
-  ::after {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-100%);
-    width: 100%;
-    height: 4px;
-    background-color: #b3b3b3;
-    border-radius: 5px;
-    content: "";
-  }
-`;
-
-export const CircleSound = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 14px;
-  height: 14px;
-  background-color: white;
-  border-radius: 50%;
-  content: "";
-  z-index: 1;
 `;
