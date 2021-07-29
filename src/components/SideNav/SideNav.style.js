@@ -21,7 +21,7 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  @media (min-width: 992px) {
+  @media (hover: hover) {
     overflow-y: auto;
   }
 `;

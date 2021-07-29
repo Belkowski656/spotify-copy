@@ -34,12 +34,12 @@ const Player = () => {
   const [audioValue, setAudioValue] = useState(50);
 
   const handlePlay = () => {
-    setPlay((prev) => !prev);
-
     const player = document.querySelector("#player");
 
     if (play) player.play();
     else player.pause();
+
+    setPlay((prev) => !prev);
   };
 
   const handleSoundValueChange = (e) => {
