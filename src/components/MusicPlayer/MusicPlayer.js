@@ -3,7 +3,8 @@ import { useState } from "react";
 import SideNav from "../SideNav/SideNav";
 import Player from "../Player/Player";
 import Profil from "../Profil/Profil";
-import Library from "../Library/Library";
+import ShowPlaylist from "../ShowPlaylist/ShowPlaylist";
+// import Library from "../Library/Library";
 // import Search from "../Search/Search";
 // import Main from "../Main/Main";
 
@@ -15,7 +16,7 @@ const MusicPlayer = () => {
       <SideNav active={active} setActive={setActive} />
       <Player />
       <Profil />
-      <Library />
+      <ShowPlaylist />
     </>
   );
 };
