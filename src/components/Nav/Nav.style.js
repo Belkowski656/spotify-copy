@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Logo = styled.a`
+export const Logo = styled(Link)`
   display: block;
   background-image: url(${({ img }) => img});
   width: 120px;
@@ -113,7 +113,7 @@ export const Menu = styled.ul`
 `;
 export const MenuElement = styled.li``;
 
-export const LogoSecond = styled.a`
+export const LogoSecond = styled(Link)`
   position: absolute;
   left: 30px;
   bottom: 30px;

@@ -24,7 +24,7 @@ const Nav = () => {
     <>
       <Navigation>
         <Wrapper>
-          <Logo href="#" img={img} />
+          <Logo to="/" img={img} />
           <HamburgerWrapper onClick={handleClick} active={active}>
             <Hamburger active={active}></Hamburger>
           </HamburgerWrapper>
@@ -36,7 +36,7 @@ const Nav = () => {
               <StyledLink to="login">Log In</StyledLink>
             </MenuElement>
             <MenuElement>
-              <LogoSecond img={img} />
+              <LogoSecond to="/" img={img} />
             </MenuElement>
           </Menu>
         </Wrapper>

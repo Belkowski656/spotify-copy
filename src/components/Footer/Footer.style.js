@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Wrapper = styled.div`
   background-color: black;
@@ -16,7 +17,7 @@ export const Content = styled.div`
   margin: 0 auto;
 `;
 
-export const Logo = styled.a`
+export const Logo = styled(Link)`
   display: block;
   background-image: url(${({ img }) => img});
   width: 120px;

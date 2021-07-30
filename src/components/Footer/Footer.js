@@ -7,7 +7,7 @@ const Footer = () => {
     <>
       <Wrapper>
         <Content>
-          <Logo img={img} />
+          <Logo to="/" img={img} />
           <Text>&copy; 2021 Spotify</Text>
         </Content>
       </Wrapper>
