@@ -1,9 +1,7 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Button = styled.button`
-  /* position: fixed;
-  top: 20px;
-  right: 20px; */
   background-image: url(${({ img }) => img});
   background-size: cover;
   border: 2px solid black;
@@ -46,7 +44,7 @@ export const Element = styled.li`
     background-color: #4d4b4b;
   }
 `;
-export const Link = styled.a`
+export const StyledLink = styled(Link)`
   display: block;
   font-size: 14px;
   color: white;

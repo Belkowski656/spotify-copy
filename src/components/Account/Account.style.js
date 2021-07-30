@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { Link } from "react-router-dom";
+
 export const Wrapper = styled.div`
   position: fixed;
   min-height: 100%;
@@ -105,7 +107,7 @@ export const TableEdit = styled.td`
   }
 `;
 
-export const Button = styled.a`
+export const Button = styled(Link)`
   display: block;
   margin: 20px auto;
   padding: 15px 0;
@@ -118,6 +120,7 @@ export const Button = styled.a`
   cursor: pointer;
   transition: 0.3;
   text-align: center;
+  text-decoration: none;
 
   :hover {
     background-color: #fff;

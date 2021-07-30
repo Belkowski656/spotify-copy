@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, Wrapper, Menu, Element, Link } from "./Profil.style";
+import { Button, Wrapper, Menu, Element, StyledLink } from "./Profil.style";
 
 import img from "../../resources/images/portrait.jpg";
 
@@ -13,7 +13,7 @@ const Profil = () => {
         <Button img={img} onClick={() => setActive((prev) => !prev)}></Button>
         <Menu active={active}>
           <Element>
-            <Link href="#">Account</Link>
+            <StyledLink to="/account">Account</StyledLink>
           </Element>
           <Element>Log out</Element>
         </Menu>

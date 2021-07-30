@@ -65,7 +65,7 @@ const Account = () => {
             </Row>
           </tbody>
         </Content>
-        <Button>Back to Player</Button>
+        <Button to="/player">Back to Player</Button>
       </Box>
     </>
   );
