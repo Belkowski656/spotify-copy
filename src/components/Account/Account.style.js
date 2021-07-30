@@ -1,0 +1,126 @@
+import styled from "styled-components";
+
+export const Wrapper = styled.div`
+  position: fixed;
+  min-height: 100%;
+  min-width: 100%;
+  background-image: url(${({ bgc }) => bgc});
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+`;
+
+export const Box = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  color: white;
+  padding: 30px;
+  overflow: scroll;
+  height: 90%;
+  max-height: 636px;
+
+  @media (hover: hover) {
+    overflow: auto;
+  }
+`;
+
+export const Title = styled.h2`
+  text-align: center;
+`;
+
+export const Img = styled.div`
+  position: relative;
+  background-image: url(${({ img }) => img});
+  background-size: cover;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 50px auto;
+`;
+
+export const Edit = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: gray;
+  opacity: 0;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+
+  i {
+    line-height: 150px;
+    color: white;
+    font-size: 40px;
+  }
+
+  ${Img}:hover & {
+    opacity: 0.9;
+  }
+`;
+
+export const Content = styled.table`
+  font-size: 12px;
+`;
+
+export const Row = styled.tr``;
+
+export const TableLeft = styled.td`
+  width: 100%;
+  padding: 10px 0;
+  color: #9e9e9e;
+`;
+
+export const TableRight = styled.td``;
+
+export const TableEdit = styled.td`
+  text-align: right;
+  padding: 0 0 0 10px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  :hover {
+    color: #1ed760;
+  }
+
+  @media (min-width: 375px) {
+    padding: 0 0 0 50px;
+  }
+
+  @media (min-width: 568px) {
+    padding: 0 0 0 120px;
+  }
+
+  @media (min-width: 992px) {
+    padding: 0 0 0 200px;
+  }
+`;
+
+export const Button = styled.a`
+  display: block;
+  margin: 20px auto;
+  padding: 15px 0;
+  border-radius: 20px;
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3;
+  text-align: center;
+
+  :hover {
+    background-color: #fff;
+    color: #1ed760;
+  }
+`;
