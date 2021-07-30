@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { Link } from "react-router-dom";
+
 export const Wrapper = styled.div`
   position: fixed;
   background-color: black;
@@ -33,10 +35,22 @@ export const Container = styled.ul`
 
 export const Element = styled.li`
   padding: 5px;
-  font-size: 14px;
   font-weight: bold;
   color: #b3b3b3;
   cursor: pointer;
+  :hover {
+    color: white;
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  color: #b3b3b3;
+  cursor: pointer;
+  text-decoration: none;
+
   :hover {
     color: white;
   }

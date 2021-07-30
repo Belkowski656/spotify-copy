@@ -9,6 +9,7 @@ import {
   Playlists,
   Playlist,
   Arrow,
+  StyledLink,
 } from "./SideNav.style";
 
 const SideNav = ({ active, setActive }) => {
@@ -18,17 +19,29 @@ const SideNav = ({ active, setActive }) => {
         <Content>
           <Logo img={img} />
           <Container>
-            <Element>Home</Element>
-            <Element>Search</Element>
-            <Element>Your Library</Element>
+            <Element>
+              <StyledLink to="/player">Home</StyledLink>
+            </Element>
+            <Element>
+              <StyledLink to="search">Search</StyledLink>
+            </Element>
+            <Element>
+              <StyledLink to="library">Library</StyledLink>
+            </Element>
           </Container>
           <Container>
             <Element>Create Playlist</Element>
-            <Element>Liked Songs</Element>
+            <Element>
+              <StyledLink to="playlist">Liked Songs</StyledLink>
+            </Element>
           </Container>
           <Playlists>
-            <Playlist>My Playlist #1</Playlist>
-            <Playlist>My Playlist #2</Playlist>
+            <Playlist>
+              <StyledLink to="playlist">My Playlist</StyledLink>
+            </Playlist>
+            <Playlist>
+              <StyledLink to="playlist">My Playlist</StyledLink>
+            </Playlist>
           </Playlists>
         </Content>
         <Arrow active={active} onClick={() => setActive((prev) => !prev)}>

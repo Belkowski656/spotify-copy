@@ -2,7 +2,7 @@ import MusicBox from "../MusicBox/MusicBox";
 
 import { Wrapper, Content, SearchInput, Form } from "./Search.style";
 
-const Search = () => {
+const Search = ({ xd }) => {
   return (
     <>
       <Wrapper>
