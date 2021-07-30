@@ -21,47 +21,6 @@ export const Logo = styled(Link)`
   cursor: pointer;
 `;
 
-export const Title = styled.h2`
-  font-size: 30px;
-  padding: 15px;
-`;
-
-export const Button = styled.button`
-  background-color: #1877f2;
-  color: white;
-  padding: 15px 50px;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 10px 0;
-  cursor: pointer;
-`;
-
-export const Line = styled.div`
-  position: relative;
-  color: gray;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  ::after,
-  ::before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 35%;
-    height: 1px;
-    background-color: gray;
-    content: "";
-  }
-  ::after {
-    transform: translate(-120%, -50%);
-  }
-
-  ::before {
-    transform: translate(20%, -50%);
-  }
-`;
-
 export const TextBig = styled.p`
   font-size: 20px;
   font-weight: bold;

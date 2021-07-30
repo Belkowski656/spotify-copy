@@ -7,9 +7,6 @@ import logo from "../../resources/images/SpotifyBlack.png";
 
 import {
   Logo,
-  Title,
-  Button,
-  Line,
   Wrapper,
   Text,
   Form,
@@ -113,9 +110,6 @@ const SignUp = () => {
     <>
       <Container>
         <Logo to="/" img={logo} />
-        <Title>Sign Up for free and start listening.</Title>
-        <Button>Sign Up with Facebook</Button>
-        <Line>Or</Line>
         <Wrapper>
           <TextBig>Sign Up with e-mail address</TextBig>
           <Form onSubmit={handleSubmit(onSubmit)}>
