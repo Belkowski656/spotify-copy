@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -60,7 +61,7 @@ export const Text = styled.p`
   font-size: 18px;
   line-height: 160%;
 `;
-export const Button = styled.a`
+export const Button = styled(Link)`
   display: block;
   background-color: #1ed760;
   color: #2941ab;

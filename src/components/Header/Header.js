@@ -7,7 +7,7 @@ const Header = () => {
         <Content>
           <Title>Listening is everything</Title>
           <Text>Millions of songs and podcasts. Absolutely for free</Text>
-          <Button href="#">Sign Up for free</Button>
+          <Button to="signup">Sign Up for free</Button>
         </Content>
       </Wrapper>
     </>
