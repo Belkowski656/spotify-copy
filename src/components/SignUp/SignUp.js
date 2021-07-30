@@ -112,7 +112,7 @@ const SignUp = () => {
   return (
     <>
       <Container>
-        <Logo href="#" img={logo} />
+        <Logo to="/" img={logo} />
         <Title>Sign Up for free and start listening.</Title>
         <Button>Sign Up with Facebook</Button>
         <Line>Or</Line>

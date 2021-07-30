@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   text-align: center;
@@ -9,7 +10,7 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div``;
 
-export const Logo = styled.a`
+export const Logo = styled(Link)`
   display: block;
   background-image: url(${({ img }) => img});
   width: 120px;
