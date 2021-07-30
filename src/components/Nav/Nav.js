@@ -8,8 +8,8 @@ import {
   HamburgerWrapper,
   Menu,
   MenuElement,
-  Link,
   Wrapper,
+  StyledLink,
 } from "./Nav.style";
 
 import img from "../../resources/images/SpotifyWhite.png";
@@ -30,10 +30,10 @@ const Nav = () => {
           </HamburgerWrapper>
           <Menu active={active}>
             <MenuElement>
-              <Link>Sign Up</Link>
+              <StyledLink to="signup">Sign Up</StyledLink>
             </MenuElement>
             <MenuElement>
-              <Link>Log In</Link>
+              <StyledLink to="login">Log In</StyledLink>
             </MenuElement>
             <MenuElement>
               <LogoSecond img={img} />

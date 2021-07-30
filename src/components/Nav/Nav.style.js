@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { BrowserRouter as Route, Link } from "react-router-dom";
 
 export const Navigation = styled.nav`
   background-color: black;
@@ -128,13 +129,15 @@ export const LogoSecond = styled.a`
   }
 `;
 
-export const Link = styled.a`
+export const StyledLink = styled(Link)`
   display: block;
   text-align: center;
   padding: 30px 0;
   font-size: 34px;
   font-weight: bold;
   cursor: pointer;
+  text-decoration: none;
+  color: white;
 
   @media (min-width: 992px) {
     font-size: 20px;
