@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ReactAudioPlayer from "react-audio-player";
 
 import {
   Wrapper,
@@ -8,8 +9,6 @@ import {
   Title,
   Name,
   Like,
-  PlayerContainer,
-  Source,
   Panel,
   Play,
   Previous,
@@ -30,16 +29,44 @@ const Player = () => {
   const [play, setPlay] = useState(false);
   const [like, setLike] = useState(false);
 
+  const [audioDuration, setAudioDuration] = useState(`0:00`);
+  // const [soundDuration, setSoundDuration] = useState();
+
   const [soundValue, setSoundValue] = useState(50);
-  const [audioValue, setAudioValue] = useState(50);
+
+  const [audioValue, setAudioValue] = useState(0);
+  const [audioMaxValue, setAudioMaxValue] = useState(0);
 
   const handlePlay = () => {
-    const player = document.querySelector("#player");
-
-    if (play) player.play();
-    else player.pause();
-
     setPlay((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const audio = document.querySelector("#player");
+
+    if (play) audio.play();
+    else audio.pause();
+  });
+
+  const handleOnCanPlay = () => {
+    const audio = document.querySelector("#player");
+
+    const minutes = Math.floor(audio.duration / 60);
+    const seconds = Math.floor(audio.duration % 60);
+
+    setAudioDuration(`${minutes}:${seconds}`);
+    setAudioMaxValue(Math.floor(audio.duration));
+  };
+
+  const handleListen = () => {
+    const audio = document.querySelector("#player");
+
+    // const duration = Math.floor(audio.duration);
+    const currentTime = Math.floor(audio.currentTime);
+
+    // const currentTimeInPercentage = (currentTime / duration) * 100;
+
+    setAudioValue(currentTime);
   };
 
   const handleSoundValueChange = (e) => {
@@ -47,6 +74,9 @@ const Player = () => {
   };
 
   const handleAudioValueChange = (e) => {
+    const audio = document.querySelector("#player");
+
+    audio.currentTime = e.target.value;
     setAudioValue(e.target.value);
   };
 
@@ -64,9 +94,15 @@ const Player = () => {
               <i className="far fa-heart"></i>
             </Like>
           </Info>
-          <PlayerContainer id={"player"}>
-            <Source src={music} type="audio/mpeg" />
-          </PlayerContainer>
+          <ReactAudioPlayer
+            id={"player"}
+            src={music}
+            type="audio/mpeg"
+            volume={soundValue / 100}
+            onCanPlay={handleOnCanPlay}
+            onListen={handleListen}
+            listenInterval={1000}
+          ></ReactAudioPlayer>
           <Panel>
             <Previous>
               <i className="fas fa-step-forward"></i>
@@ -87,11 +123,11 @@ const Player = () => {
                 type="range"
                 onChange={handleAudioValueChange}
                 min={0}
-                max={100}
+                max={audioMaxValue}
                 value={audioValue}
-                progress={audioValue}
+                progress={(audioValue / audioMaxValue) * 100}
               ></ProgressContainer>
-              <Time>3:21</Time>
+              <Time>{audioDuration}</Time>
             </Progress>
           </Panel>
           <SoundControl>

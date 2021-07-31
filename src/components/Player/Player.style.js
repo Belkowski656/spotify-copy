@@ -67,10 +67,6 @@ export const Like = styled.div`
   color: ${({ like }) => (like ? "#1db954" : "white")};
 `;
 
-export const PlayerContainer = styled.audio``;
-
-export const Source = styled.source``;
-
 export const Panel = styled.div`
   text-align: center;
   color: #b3b3b3;
