@@ -19,6 +19,7 @@ const Main = () => {
           <MusicBox />
           <MusicBox />
           <MusicBox />
+          <MusicBox />
         </Content>
       </Wrapper>
     </>

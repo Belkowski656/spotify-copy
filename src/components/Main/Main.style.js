@@ -12,11 +12,11 @@ export const Title = styled.h2`
 `;
 
 export const Content = styled.div`
-  margin-top: 40px;
-  margin-bottom: 200px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 40px;
+  margin-bottom: 200px;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;

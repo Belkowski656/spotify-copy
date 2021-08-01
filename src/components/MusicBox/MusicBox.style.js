@@ -4,16 +4,31 @@ export const Wrapper = styled.div`
   position: relative;
   padding: 15px;
   background-color: rgb(35, 35, 35);
-  width: 230px;
+  /* width: 230px; */
+  width: 100%;
   border-radius: 10px;
   margin-bottom: 50px;
-  margin-right: 10px;
+  text-align: center;
+
   :hover {
     background-color: rgb(45, 45, 45);
+  }
+
+  @media (min-width: 576px) {
+    width: 48%;
+  }
+
+  @media (min-width: 768px) {
+    width: 31%;
+  }
+
+  @media (min-width: 992px) {
+    width: 24%;
   }
 `;
 
 export const Image = styled.div`
+  margin: 0 auto;
   background-image: url(${({ img }) => img});
   background-repeat: no-repeat;
   background-size: cover;
@@ -38,7 +53,7 @@ export const Name = styled.p`
 export const Play = styled.button`
   position: absolute;
   top: 50%;
-  right: 10%;
+  right: 20%;
   padding: 10px;
   background-color: #1ed760;
   border: none;
@@ -68,7 +83,7 @@ export const Play = styled.button`
 export const Add = styled.button`
   position: absolute;
   top: 50%;
-  left: 10%;
+  left: 20%;
   padding: 10px;
   background-color: #1ed760;
   border: none;

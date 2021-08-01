@@ -30,6 +30,8 @@ const Library = () => {
           <Playlist />
           <Playlist />
           <Playlist />
+          <Playlist />
+          <Playlist />
         </Content>
       </Wrapper>
     </>
