@@ -4,7 +4,6 @@ export const Wrapper = styled.div`
   background-color: rgb(28, 28, 28);
   color: white;
   padding: 20px;
-  /* margin-bottom: 150px; */
 `;
 
 export const PageTitle = styled.h2`
@@ -34,11 +33,15 @@ export const LikedSongs = styled.div`
   background: linear-gradient(149.46deg, #450af5, #8e8ee5 99.16%);
   border-radius: 10px;
   cursor: pointer;
-  margin: 30px 10px 0;
+  margin-top: 30px;
 
   @media (min-width: 576px) {
-    width: calc(100% - 270px);
-    height: 289px;
+    width: 48%;
+    height: 309px;
+  }
+
+  @media (min-width: 992px) {
+    height: 265px;
   }
 `;
 
