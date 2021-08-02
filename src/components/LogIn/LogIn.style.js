@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Wrapper = styled.div`
   padding: 20px;
@@ -77,7 +78,7 @@ export const TextBold = styled.p`
   margin: 10px 0;
 `;
 
-export const Button = styled.a`
+export const Button = styled(Link)`
   display: block;
   text-transform: uppercase;
   text-align: center;
@@ -90,6 +91,7 @@ export const Button = styled.a`
   border-radius: 25px;
   transition: 0.2s;
   cursor: pointer;
+  text-decoration: none;
   :hover {
     background-color: black;
     color: white;

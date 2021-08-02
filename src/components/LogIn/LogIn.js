@@ -56,7 +56,9 @@ const LogIn = () => {
           <Submit>Log in</Submit>
         </Form>
         <TextBold>Don't have an account?</TextBold>
-        <Button type="submit">Sign up</Button>
+        <Button to="/signup" type="submit">
+          Sign up
+        </Button>
       </Wrapper>
     </>
   );
