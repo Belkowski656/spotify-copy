@@ -135,3 +135,7 @@ export const Error = styled.p`
   font-size: 14px;
   margin-top: 10px;
 `;
+
+export const LogIn = styled(Link)`
+  color: #1ed760;
+`;

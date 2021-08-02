@@ -27,6 +27,7 @@ import {
   LabelGender,
   LabelCheckBox,
   Error,
+  LogIn,
 } from "./SignUp.style";
 
 const SignUp = () => {
@@ -103,8 +104,6 @@ const SignUp = () => {
   const onSubmit = (data) => {
     console.log(data);
   };
-
-  console.log(errors);
 
   return (
     <>
@@ -190,6 +189,9 @@ const SignUp = () => {
             {errors.checkbox ? <Error>{errors.checkbox.message}</Error> : null}
             <Submit type="submit">Sign Up</Submit>
           </Form>
+          <p>
+            You already have an account? <LogIn to="/login">Sign Up</LogIn>.
+          </p>
         </Wrapper>
       </Container>
     </>
