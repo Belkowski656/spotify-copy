@@ -34,7 +34,7 @@ const LogIn = () => {
   return (
     <>
       <Wrapper>
-        <Logo img={img} />
+        <Logo to="/" img={img} />
         <Form>
           <Label>
             <Text>Email address or username</Text>

@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   margin: 0 auto;
 `;
 
-export const Logo = styled.a`
+export const Logo = styled(Link)`
   display: block;
   background-image: url(${({ img }) => img});
   width: 120px;
