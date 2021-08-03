@@ -13,11 +13,16 @@ import {
   Submit,
   TextBold,
   Button,
+  Error,
 } from "./LogIn.style";
 
 const LogIn = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+
+  const [loginError, setLoginError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
 
   const handleLoginChange = (e) => {
     const login = e.target.value;
@@ -31,11 +36,45 @@ const LogIn = () => {
     setPassword(password);
   };
 
+  const handleLogIn = async (e) => {
+    e.preventDefault();
+
+    if (!login) {
+      return setLoginError("Please enter username or email.");
+    } else {
+      setLoginError("");
+    }
+
+    if (!password) {
+      return setPasswordError("Please enter your password");
+    } else {
+      setPasswordError("");
+    }
+
+    const result = await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: login,
+        password,
+      }),
+    }).then((res) => res.json());
+
+    if (result.status === "ok") {
+      console.log("Token: ", result.data);
+      document.location.href = "/player";
+    } else {
+      setError(result.error);
+    }
+  };
+
   return (
     <>
       <Wrapper>
         <Logo to="/" img={img} />
-        <Form>
+        <Form onSubmit={handleLogIn}>
           <Label>
             <Text>Email address or username</Text>
             <Input
@@ -43,6 +82,7 @@ const LogIn = () => {
               onChange={handleLoginChange}
               placeholder="Email address or username"
             ></Input>
+            {loginError ? <Error>{loginError}</Error> : null}
           </Label>
           <Label>
             <Text>Password</Text>
@@ -50,15 +90,16 @@ const LogIn = () => {
               value={password}
               onChange={handlePasswordChange}
               placeholder="Password"
+              type="password"
             ></Input>
+            {passwordError ? <Error>{passwordError}</Error> : null}
           </Label>
+          {error ? <Error>{error}</Error> : null}
           <LinkPassword href="#">Forgot your password?</LinkPassword>
           <Submit>Log in</Submit>
         </Form>
         <TextBold>Don't have an account?</TextBold>
-        <Button to="/signup" type="submit">
-          Sign up
-        </Button>
+        <Button to="/signup">Sign up</Button>
       </Wrapper>
     </>
   );

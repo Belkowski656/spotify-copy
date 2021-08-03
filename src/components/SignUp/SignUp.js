@@ -204,7 +204,7 @@ const SignUp = () => {
             <Submit type="submit">Sign Up</Submit>
           </Form>
           <p>
-            You already have an account? <LogIn to="/login">Sign Up</LogIn>.
+            You already have an account? <LogIn to="/login">Log In</LogIn>.
           </p>
         </Wrapper>
       </Container>

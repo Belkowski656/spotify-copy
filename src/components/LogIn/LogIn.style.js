@@ -97,3 +97,9 @@ export const Button = styled(Link)`
     color: white;
   }
 `;
+
+export const Error = styled.p`
+  font-size: 14px;
+  color: red;
+  padding-top: 5px;
+`;
