@@ -38,8 +38,13 @@ app.post("/register", async (req, res) => {
 
     console.log("Success", response);
   } catch (error) {
-    console.log(error);
-    return res.json({ status: "error" });
+    if (error.code === 11000) {
+      return res.json({
+        status: "error",
+        error: `${JSON.stringify(error.keyValue)} already in use`,
+      });
+    }
+    throw error;
   }
 
   res.json({ status: "ok" });
