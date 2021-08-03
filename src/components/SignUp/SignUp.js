@@ -102,7 +102,21 @@ const SignUp = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    const { email, password, username, date, gender } = data;
+
+    fetch("/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        username,
+        date,
+        gender,
+      }),
+    });
   };
 
   return (

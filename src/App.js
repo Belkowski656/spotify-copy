@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import SignUp from "./components/SignUp/SignUp";
@@ -15,31 +14,23 @@ import Library from "./components/Library/Library";
 import { GlobalStyle } from "./GlobalStyles";
 
 const App = () => {
-  const callBackend = async ()=>{
-    const response = await fetch('/backend');
-    const body = await response.json();
-
-    console.log(body);
-  };
-
-  useEffect(()=> callBackend());
-
-return(  
-<Router>
-    <GlobalStyle></GlobalStyle>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="player" element={<MusicPlayer />}>
-        <Route path="/" element={<Main />} />
-        <Route path="search" element={<Search />} />
-        <Route path="library" element={<Library />} />
-        <Route path="playlist" element={<ShowPlaylist />} />
-      </Route>
-      <Route path="signup" element={<SignUp />} />
-      <Route path="login" element={<LogIn />} />
-      <Route path="account" element={<Account />} />
-    </Routes>
-  </Router>);
+  return (
+    <Router>
+      <GlobalStyle></GlobalStyle>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="player" element={<MusicPlayer />}>
+          <Route path="/" element={<Main />} />
+          <Route path="search" element={<Search />} />
+          <Route path="library" element={<Library />} />
+          <Route path="playlist" element={<ShowPlaylist />} />
+        </Route>
+        <Route path="signup" element={<SignUp />} />
+        <Route path="login" element={<LogIn />} />
+        <Route path="account" element={<Account />} />
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;
