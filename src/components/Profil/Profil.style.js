@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Button = styled.button`
-  background-image: url(${({ img }) => img});
+  background-image: url(${({ avatar }) => avatar});
   background-size: cover;
   border: 2px solid black;
   border-radius: 50%;

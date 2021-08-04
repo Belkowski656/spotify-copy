@@ -19,6 +19,21 @@ const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
+app.post("/player", async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const _id = user.id;
+
+    const userData = await User.findOne({ _id }).lean();
+
+    res.json({ status: "ok", avatar: userData.image });
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
+
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -62,8 +77,6 @@ app.post("/register", async (req, res) => {
       date,
       gender,
     });
-
-    console.log("Success", response);
   } catch (error) {
     if (error.code === 11000) {
       return res.json({

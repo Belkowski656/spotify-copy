@@ -30,7 +30,6 @@ const Player = () => {
   const [like, setLike] = useState(false);
 
   const [audioDuration, setAudioDuration] = useState(`0:00`);
-  // const [soundDuration, setSoundDuration] = useState();
 
   const [soundValue, setSoundValue] = useState(50);
 
@@ -61,10 +60,7 @@ const Player = () => {
   const handleListen = () => {
     const audio = document.querySelector("#player");
 
-    // const duration = Math.floor(audio.duration);
     const currentTime = Math.floor(audio.currentTime);
-
-    // const currentTimeInPercentage = (currentTime / duration) * 100;
 
     setAudioValue(currentTime);
   };

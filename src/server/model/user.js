@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema(
     username: { type: String, require: true, unique: true },
     date: { type: Date, require: true },
     gender: { type: String, require: true },
+    image: { type: String, default: "avatar.png" },
   },
   { collection: "users" }
 );

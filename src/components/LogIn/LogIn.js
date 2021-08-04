@@ -63,7 +63,8 @@ const LogIn = () => {
     }).then((res) => res.json());
 
     if (result.status === "ok") {
-      console.log("Token: ", result.data);
+      localStorage.setItem("token", result.data);
+
       document.location.href = "/player";
     } else {
       setError(result.error);
