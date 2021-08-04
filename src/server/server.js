@@ -19,6 +19,21 @@ const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
+app.post("/get-account-data", async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const _id = user.id;
+
+    const userData = await User.findOne({ _id }).lean();
+
+    res.json({ status: "ok", data: userData });
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
+
 app.post("/player", async (req, res) => {
   const { token } = req.body;
 

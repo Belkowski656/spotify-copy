@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   Wrapper,
   Box,
@@ -12,16 +14,66 @@ import {
   Button,
 } from "./Account.style";
 
-import img from "../../resources/images/portrait.jpg";
 import bgc from "../../resources/images/bgc1.jpg";
 
 const Account = () => {
+  const [userData, setUserData] = useState({});
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const getAccountData = async () => {
+    const result = await fetch("/get-account-data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: localStorage.getItem("token"),
+      }),
+    }).then((res) => res.json());
+
+    if (result.status === "ok") {
+      const { username, email, date, image, password, gender } = result.data;
+
+      const birth = new Date(date);
+
+      const day = birth.getDate();
+      const month = months[birth.getMonth()];
+      const year = birth.getFullYear();
+
+      setUserData({
+        username,
+        email,
+        date: `${day} ${month} ${year}`,
+        image: require(`../../resources/images/${image}`).default,
+        password,
+        gender,
+      });
+    }
+  };
+
+  useEffect(() => {
+    getAccountData();
+  }, []);
   return (
     <>
       <Wrapper bgc={bgc}></Wrapper>
       <Box>
         <Title>Account details</Title>
-        <Img img={img}>
+        <Img img={userData.image}>
           <Edit>
             <i className="far fa-edit"></i>
           </Edit>
@@ -30,28 +82,28 @@ const Account = () => {
           <tbody>
             <Row>
               <TableLeft>Username</TableLeft>
-              <TableRight>Example</TableRight>
+              <TableRight>{userData.username}</TableRight>
               <TableEdit>
                 <i className="far fa-edit"></i>
               </TableEdit>
             </Row>
             <Row>
               <TableLeft>E-mail</TableLeft>
-              <TableRight>example@gmail.com</TableRight>
+              <TableRight>{userData.email}</TableRight>
               <TableEdit>
                 <i className="far fa-edit"></i>
               </TableEdit>
             </Row>
             <Row>
               <TableLeft>Birth date</TableLeft>
-              <TableRight>30 listopdada 2000</TableRight>
+              <TableRight>{userData.date}</TableRight>
               <TableEdit>
                 <i className="far fa-edit"></i>
               </TableEdit>
             </Row>
             <Row>
               <TableLeft>Sex</TableLeft>
-              <TableRight>Male</TableRight>
+              <TableRight>{userData.gender}</TableRight>
               <TableEdit>
                 <i className="far fa-edit"></i>
               </TableEdit>
