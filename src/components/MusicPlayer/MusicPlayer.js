@@ -18,7 +18,7 @@ const MusicPlayer = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        token: localStorage.getItem("token"),
+        token: sessionStorage.getItem("token"),
       }),
     }).then((res) => res.json());
 
@@ -27,8 +27,13 @@ const MusicPlayer = () => {
 
   useEffect(() => getToken());
 
+  const route = () => {
+    if (!sessionStorage.getItem("token")) document.location.href = "/login";
+  };
+
   return (
     <>
+      {route()}
       <SideNav active={active} setActive={setActive} />
       <Player />
       <Profil avatar={avatar} />

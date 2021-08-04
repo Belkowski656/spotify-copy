@@ -4,6 +4,10 @@ import { Button, Wrapper, Menu, Element, StyledLink } from "./Profil.style";
 
 const Profil = ({ avatar }) => {
   const [active, setActive] = useState(false);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+  };
   return (
     <>
       <Wrapper>
@@ -15,7 +19,11 @@ const Profil = ({ avatar }) => {
           <Element>
             <StyledLink to="/account">Account</StyledLink>
           </Element>
-          <Element>Log out</Element>
+          <Element>
+            <StyledLink onClick={handleLogout} to="/login">
+              Logout
+            </StyledLink>
+          </Element>
         </Menu>
       </Wrapper>
     </>

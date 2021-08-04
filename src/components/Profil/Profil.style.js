@@ -36,7 +36,6 @@ export const Element = styled.li`
   color: white;
   font-weight: bold;
   background-color: #282828;
-  padding: 10px 80px 10px 10px;
   border-radius: 5px;
   cursor: pointer;
 
@@ -46,7 +45,9 @@ export const Element = styled.li`
 `;
 export const StyledLink = styled(Link)`
   display: block;
+  width: 100%;
   font-size: 14px;
   color: white;
   text-decoration: none;
+  padding: 10px 80px 10px 10px;
 `;
