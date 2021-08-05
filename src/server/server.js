@@ -19,6 +19,35 @@ const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
+app.post("/send-data", async (req, res) => {
+  const {
+    token,
+    username,
+    email,
+    date,
+    password: plainTextPassword,
+    gender,
+  } = req.body;
+
+  const password = await bcrypt.hash(plainTextPassword, 10);
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const _id = user.id;
+
+    await User.updateOne(
+      { _id },
+      {
+        $set: { email, password, username, date, gender },
+      }
+    );
+
+    res.json({ status: "ok" });
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
+
 app.post("/get-account-data", async (req, res) => {
   const { token } = req.body;
 

@@ -9,15 +9,19 @@ import {
   Row,
   TableLeft,
   TableRight,
-  TableEdit,
+  TableInput,
   Edit,
   Button,
+  ButtonEdit,
+  ButtonWrapper,
 } from "./Account.style";
 
 import bgc from "../../resources/images/bgc1.jpg";
 
 const Account = () => {
   const [userData, setUserData] = useState({});
+  const [image, setImage] = useState({});
+  const [edit, setEdit] = useState(false);
 
   const months = [
     "January",
@@ -46,7 +50,7 @@ const Account = () => {
     }).then((res) => res.json());
 
     if (result.status === "ok") {
-      const { username, email, date, image, password, gender } = result.data;
+      const { username, email, date, image, gender } = result.data;
 
       const birth = new Date(date);
 
@@ -54,14 +58,17 @@ const Account = () => {
       const month = months[birth.getMonth()];
       const year = birth.getFullYear();
 
-      setUserData({
-        username,
-        email,
-        date: `${day} ${month} ${year}`,
-        image: require(`../../resources/images/${image}`).default,
-        password,
-        gender,
-      });
+      const password = "";
+
+      setUserData([
+        { value: username, name: "Username" },
+        { value: email, name: "E-mail" },
+        { value: `${day} ${month} ${year}`, name: "Birth date" },
+        { value: password, name: "Password" },
+        { value: gender, name: "Gender" },
+      ]);
+
+      setImage(require(`../../resources/images/${image}`).default);
     }
   };
 
@@ -74,56 +81,91 @@ const Account = () => {
     getAccountData();
   }, []);
 
+  const handleEdit = () => {
+    setEdit((prev) => !prev);
+  };
+
+  const handleChange = (e, type) => {
+    const updatedUserData = [...userData];
+    updatedUserData[e.target.dataset.index].value = e.target.value;
+
+    setUserData(updatedUserData);
+  };
+
+  const sendDataToDataBase = async () => {
+    // const result = await fetch("/get-account-data", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     token: localStorage.getItem("token"),
+    //   }),
+    // }).then((res) => res.json());
+
+    const result = await fetch("/send-data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: sessionStorage.getItem("token"),
+        username: userData[0].value,
+        email: userData[1].value,
+        date: userData[2].value,
+        password: userData[3].value,
+        gender: userData[4].value,
+      }),
+    }).then((res) => res.json());
+
+    if (result.status === "ok") getAccountData();
+  };
+
   return (
     <>
       <Wrapper bgc={bgc}></Wrapper>
       <Box>
         <Title>Account details</Title>
-        <Img img={userData.image}>
+        <Img img={image}>
           <Edit>
             <i className="far fa-edit"></i>
           </Edit>
         </Img>
         <Content>
           <tbody>
-            <Row>
-              <TableLeft>Username</TableLeft>
-              <TableRight>{userData.username}</TableRight>
-              <TableEdit>
-                <i className="far fa-edit"></i>
-              </TableEdit>
-            </Row>
-            <Row>
-              <TableLeft>E-mail</TableLeft>
-              <TableRight>{userData.email}</TableRight>
-              <TableEdit>
-                <i className="far fa-edit"></i>
-              </TableEdit>
-            </Row>
-            <Row>
-              <TableLeft>Birth date</TableLeft>
-              <TableRight>{userData.date}</TableRight>
-              <TableEdit>
-                <i className="far fa-edit"></i>
-              </TableEdit>
-            </Row>
-            <Row>
-              <TableLeft>Sex</TableLeft>
-              <TableRight>{userData.gender}</TableRight>
-              <TableEdit>
-                <i className="far fa-edit"></i>
-              </TableEdit>
-            </Row>
-            <Row>
-              <TableLeft>Password</TableLeft>
-              <TableRight>********</TableRight>
-              <TableEdit>
-                <i className="far fa-edit"></i>
-              </TableEdit>
-            </Row>
+            {userData.length
+              ? userData.map((row, i) => (
+                  <Row key={i}>
+                    <TableLeft>{row.name}</TableLeft>
+                    {!edit ? (
+                      <TableRight>{row.value}</TableRight>
+                    ) : (
+                      <TableRight>
+                        <TableInput
+                          value={row.value}
+                          onChange={handleChange}
+                          data-index={i}
+                          type="text"
+                          placeholder={`New ${row.name}`}
+                        ></TableInput>
+                      </TableRight>
+                    )}
+                  </Row>
+                ))
+              : null}
           </tbody>
         </Content>
-        <Button to="/player">Back to Player</Button>
+        <ButtonWrapper>
+          <Button to="/player">Back to Player</Button>
+          <ButtonEdit
+            onClick={() => {
+              handleEdit();
+              if (edit) {
+                sendDataToDataBase();
+              }
+            }}
+          >
+            {edit ? "Save" : "Edit"}
+          </ButtonEdit>
+        </ButtonWrapper>
       </Box>
     </>
   );

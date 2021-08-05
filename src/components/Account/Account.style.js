@@ -84,33 +84,12 @@ export const TableLeft = styled.td`
 
 export const TableRight = styled.td``;
 
-export const TableEdit = styled.td`
-  text-align: right;
-  padding: 0 0 0 10px;
-  cursor: pointer;
-  transition: 0.3s;
-
-  :hover {
-    color: #1ed760;
-  }
-
-  @media (min-width: 375px) {
-    padding: 0 0 0 50px;
-  }
-
-  @media (min-width: 568px) {
-    padding: 0 0 0 120px;
-  }
-
-  @media (min-width: 992px) {
-    padding: 0 0 0 200px;
-  }
+export const TableInput = styled.input`
+  padding: 5px;
 `;
 
 export const Button = styled(Link)`
-  display: block;
-  margin: 20px auto;
-  padding: 15px 0;
+  padding: 15px 20px;
   border-radius: 20px;
   background-color: transparent;
   color: white;
@@ -126,4 +105,30 @@ export const Button = styled(Link)`
     background-color: #fff;
     color: #1ed760;
   }
+`;
+
+export const ButtonEdit = styled.div`
+  padding: 15px 30px;
+  border-radius: 20px;
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3;
+  text-align: center;
+  text-decoration: none;
+  margin-left: 20px;
+
+  :hover {
+    background-color: #fff;
+    color: #1ed760;
+  }
+`;
+
+export const ButtonWrapper = styled.div`
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
 `;
