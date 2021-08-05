@@ -25,15 +25,18 @@ const MusicPlayer = () => {
     setAvatar(require(`../../resources/images/${result.avatar}`).default);
   };
 
-  useEffect(() => getToken());
+  useEffect(() => {
+    verify();
+    getToken();
+  });
 
-  const route = () => {
+  const verify = () => {
     if (!sessionStorage.getItem("token")) document.location.href = "/login";
   };
 
   return (
     <>
-      {route()}
+      {verify()}
       <SideNav active={active} setActive={setActive} />
       <Player />
       <Profil avatar={avatar} />

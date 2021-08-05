@@ -65,9 +65,15 @@ const Account = () => {
     }
   };
 
+  const verify = () => {
+    if (!sessionStorage.getItem("token")) document.location.href = "/login";
+  };
+
   useEffect(() => {
+    verify();
     getAccountData();
   }, []);
+
   return (
     <>
       <Wrapper bgc={bgc}></Wrapper>
