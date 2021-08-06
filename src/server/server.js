@@ -26,7 +26,6 @@ app.post("/send-data", async (req, res) => {
     email,
     date,
     password: plainTextPassword,
-    passwordLength,
     gender,
   } = req.body;
 
@@ -49,7 +48,6 @@ app.post("/send-data", async (req, res) => {
       res.json({ status: "error", error: error });
     }
   } else {
-    console.log("haslo");
     const password = await bcrypt.hash(plainTextPassword, 10);
     const passwordLength = plainTextPassword.length;
 
