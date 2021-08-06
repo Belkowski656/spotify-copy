@@ -26,6 +26,7 @@ app.post("/send-data", async (req, res) => {
     email,
     date,
     password: plainTextPassword,
+    passwordLength,
     gender,
   } = req.body;
 
@@ -50,6 +51,7 @@ app.post("/send-data", async (req, res) => {
   } else {
     console.log("haslo");
     const password = await bcrypt.hash(plainTextPassword, 10);
+    const passwordLength = plainTextPassword.length;
 
     try {
       const user = jwt.verify(token, JWT_SECRET);
@@ -58,7 +60,7 @@ app.post("/send-data", async (req, res) => {
       await User.updateOne(
         { _id },
         {
-          $set: { email, password, username, date, gender },
+          $set: { email, password, username, date, gender, passwordLength },
         }
       );
 

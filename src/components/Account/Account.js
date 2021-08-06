@@ -51,6 +51,7 @@ const Account = () => {
     }).then((res) => res.json());
 
     if (result.status === "ok") {
+      setNewPassword("");
       const { username, email, date, image, gender, passwordLength } =
         result.data;
 
