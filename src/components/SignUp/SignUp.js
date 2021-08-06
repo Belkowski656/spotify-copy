@@ -113,6 +113,7 @@ const SignUp = () => {
         body: JSON.stringify({
           email,
           password,
+          passwordLength: password.length,
           username,
           date,
           gender,

@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema(
     date: { type: Date, require: true },
     gender: { type: String, require: true },
     image: { type: String, default: "avatar.png" },
+    passwordLength: { type: Number, require: true },
   },
   { collection: "users" }
 );

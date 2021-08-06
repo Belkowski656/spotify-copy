@@ -20,6 +20,7 @@ import bgc from "../../resources/images/bgc1.jpg";
 
 const Account = () => {
   const [userData, setUserData] = useState({});
+  const [newPassword, setNewPassword] = useState("");
   const [image, setImage] = useState({});
   const [edit, setEdit] = useState(false);
 
@@ -45,12 +46,13 @@ const Account = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        token: localStorage.getItem("token"),
+        token: sessionStorage.getItem("token"),
       }),
     }).then((res) => res.json());
 
     if (result.status === "ok") {
-      const { username, email, date, image, gender } = result.data;
+      const { username, email, date, image, gender, passwordLength } =
+        result.data;
 
       const birth = new Date(date);
 
@@ -58,7 +60,7 @@ const Account = () => {
       const month = months[birth.getMonth()];
       const year = birth.getFullYear();
 
-      const password = "";
+      const password = "*".repeat(passwordLength);
 
       setUserData([
         { value: username, name: "Username" },
@@ -85,7 +87,10 @@ const Account = () => {
     setEdit((prev) => !prev);
   };
 
-  const handleChange = (e, type) => {
+  const handleChange = (e) => {
+    if (e.target.dataset.index === "3") {
+      return setNewPassword(e.target.value);
+    }
     const updatedUserData = [...userData];
     updatedUserData[e.target.dataset.index].value = e.target.value;
 
@@ -93,16 +98,6 @@ const Account = () => {
   };
 
   const sendDataToDataBase = async () => {
-    // const result = await fetch("/get-account-data", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     token: localStorage.getItem("token"),
-    //   }),
-    // }).then((res) => res.json());
-
     const result = await fetch("/send-data", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -111,7 +106,7 @@ const Account = () => {
         username: userData[0].value,
         email: userData[1].value,
         date: userData[2].value,
-        password: userData[3].value,
+        password: newPassword,
         gender: userData[4].value,
       }),
     }).then((res) => res.json());
@@ -140,10 +135,12 @@ const Account = () => {
                     ) : (
                       <TableRight>
                         <TableInput
-                          value={row.value}
+                          value={
+                            row.name === "Password" ? newPassword : row.value
+                          }
                           onChange={handleChange}
                           data-index={i}
-                          type="text"
+                          type={row.name === "Password" ? "password" : "text"}
                           placeholder={`New ${row.name}`}
                         ></TableInput>
                       </TableRight>

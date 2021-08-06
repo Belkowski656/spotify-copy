@@ -29,22 +29,43 @@ app.post("/send-data", async (req, res) => {
     gender,
   } = req.body;
 
-  const password = await bcrypt.hash(plainTextPassword, 10);
+  console.log(req.body);
 
-  try {
-    const user = jwt.verify(token, JWT_SECRET);
-    const _id = user.id;
+  if (plainTextPassword === "") {
+    try {
+      const user = jwt.verify(token, JWT_SECRET);
+      const _id = user.id;
 
-    await User.updateOne(
-      { _id },
-      {
-        $set: { email, password, username, date, gender },
-      }
-    );
+      await User.updateOne(
+        { _id },
+        {
+          $set: { email, username, date, gender },
+        }
+      );
 
-    res.json({ status: "ok" });
-  } catch (error) {
-    res.json({ status: "error", error: error });
+      res.json({ status: "ok" });
+    } catch (error) {
+      res.json({ status: "error", error: error });
+    }
+  } else {
+    console.log("haslo");
+    const password = await bcrypt.hash(plainTextPassword, 10);
+
+    try {
+      const user = jwt.verify(token, JWT_SECRET);
+      const _id = user.id;
+
+      await User.updateOne(
+        { _id },
+        {
+          $set: { email, password, username, date, gender },
+        }
+      );
+
+      res.json({ status: "ok" });
+    } catch (error) {
+      res.json({ status: "error", error: error });
+    }
   }
 });
 
@@ -106,6 +127,7 @@ app.post("/register", async (req, res) => {
   const {
     email,
     password: plainTextPassword,
+    passwordLength,
     username,
     date,
     gender,
@@ -114,12 +136,13 @@ app.post("/register", async (req, res) => {
   const password = await bcrypt.hash(plainTextPassword, 10);
 
   try {
-    const response = await User.create({
+    await User.create({
       email,
       password,
       username,
       date,
       gender,
+      passwordLength,
     });
   } catch (error) {
     if (error.code === 11000) {
