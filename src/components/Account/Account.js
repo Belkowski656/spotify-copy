@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import {
   Wrapper,
@@ -39,7 +39,7 @@ const Account = () => {
     "December",
   ];
 
-  const getAccountData = async () => {
+  const getAccountData = useCallback(async () => {
     const result = await fetch("/get-account-data", {
       method: "POST",
       headers: {
@@ -73,7 +73,7 @@ const Account = () => {
 
       setImage(require(`../../resources/images/${image}`).default);
     }
-  };
+  }, [months]);
 
   const verify = () => {
     if (!sessionStorage.getItem("token")) document.location.href = "/login";
@@ -82,7 +82,7 @@ const Account = () => {
   useEffect(() => {
     verify();
     getAccountData();
-  }, []);
+  }, [getAccountData]);
 
   const handleEdit = () => {
     setEdit((prev) => !prev);
