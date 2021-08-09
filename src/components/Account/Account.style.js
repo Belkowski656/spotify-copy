@@ -86,6 +86,19 @@ export const TableRight = styled.td``;
 
 export const TableInput = styled.input`
   padding: 5px;
+  width: 100%;
+`;
+
+export const TableRadio = styled.input`
+  display: inline-block;
+  margin: 0 5px 0 10px;
+  vertical-align: -2px;
+  cursor: pointer;
+`;
+
+export const Label = styled.label`
+  display: block;
+  padding: 10px;
 `;
 
 export const Button = styled(Link)`

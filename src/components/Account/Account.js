@@ -10,6 +10,7 @@ import {
   TableLeft,
   TableRight,
   TableInput,
+  TableRadio,
   Edit,
   Button,
   ButtonEdit,
@@ -135,15 +136,38 @@ const Account = () => {
                       <TableRight>{row.value}</TableRight>
                     ) : (
                       <TableRight>
-                        <TableInput
-                          value={
-                            row.name === "Password" ? newPassword : row.value
-                          }
-                          onChange={handleChange}
-                          data-index={i}
-                          type={row.name === "Password" ? "password" : "text"}
-                          placeholder={`New ${row.name}`}
-                        ></TableInput>
+                        {row.name === "Username" ||
+                        row.name === "E-mail" ||
+                        row.name === "Password" ? (
+                          <TableInput
+                            value={
+                              row.name === "Password" ? newPassword : row.value
+                            }
+                            onChange={handleChange}
+                            data-index={i}
+                            type={row.name === "Password" ? "password" : "text"}
+                            placeholder={`New ${row.name}`}
+                          ></TableInput>
+                        ) : row.name === "Birth date" ? (
+                          <TableInput type="date"></TableInput>
+                        ) : (
+                          <>
+                            <label>
+                              <TableRadio
+                                type="radio"
+                                name="gender"
+                              ></TableRadio>
+                              male
+                            </label>
+                            <label>
+                              <TableRadio
+                                type="radio"
+                                name="gender"
+                              ></TableRadio>{" "}
+                              female
+                            </label>
+                          </>
+                        )}
                       </TableRight>
                     )}
                   </Row>
