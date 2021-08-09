@@ -46,7 +46,7 @@ export const Img = styled.div`
   margin: 50px auto;
 `;
 
-export const Edit = styled.div`
+export const Edit = styled.label`
   position: absolute;
   top: 0;
   left: 0;
@@ -70,6 +70,10 @@ export const Edit = styled.div`
   }
 `;
 
+export const InputFile = styled.input`
+  display: none;
+`;
+
 export const Content = styled.table`
   font-size: 12px;
 `;
@@ -90,15 +94,15 @@ export const TableInput = styled.input`
 `;
 
 export const TableRadio = styled.input`
-  display: inline-block;
-  margin: 0 5px 0 10px;
+  margin-right: 5px;
   vertical-align: -2px;
   cursor: pointer;
 `;
 
 export const Label = styled.label`
-  display: block;
-  padding: 10px;
+  :nth-child(2) {
+    margin-left: 10px;
+  }
 `;
 
 export const Button = styled(Link)`

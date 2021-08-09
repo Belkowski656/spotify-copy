@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Wrapper,
@@ -11,6 +11,8 @@ import {
   TableRight,
   TableInput,
   TableRadio,
+  Label,
+  InputFile,
   Edit,
   Button,
   ButtonEdit,
@@ -23,24 +25,10 @@ const Account = () => {
   const [userData, setUserData] = useState({});
   const [newPassword, setNewPassword] = useState("");
   const [image, setImage] = useState({});
+  const [avatar, setAvatar] = useState();
   const [edit, setEdit] = useState(false);
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const getAccountData = useCallback(async () => {
+  const getAccountData = async () => {
     const result = await fetch("/get-account-data", {
       method: "POST",
       headers: {
@@ -59,7 +47,7 @@ const Account = () => {
       const birth = new Date(date);
 
       const day = birth.getDate();
-      const month = months[birth.getMonth()];
+      const month = birth.getMonth() + 1;
       const year = birth.getFullYear();
 
       const password = "*".repeat(passwordLength);
@@ -67,14 +55,19 @@ const Account = () => {
       setUserData([
         { value: username, name: "Username" },
         { value: email, name: "E-mail" },
-        { value: `${day} ${month} ${year}`, name: "Birth date" },
+        {
+          value: `${year}-${
+            month.toString().length === 1 ? "0" + month : month
+          }-${day.toString().length === 1 ? "0" + day : day}`,
+          name: "Birth date",
+        },
         { value: password, name: "Password" },
         { value: gender, name: "Gender" },
       ]);
 
       setImage(require(`../../resources/images/${image}`).default);
     }
-  }, [months]);
+  };
 
   const verify = () => {
     if (!sessionStorage.getItem("token")) document.location.href = "/login";
@@ -83,7 +76,7 @@ const Account = () => {
   useEffect(() => {
     verify();
     getAccountData();
-  }, [getAccountData]);
+  }, []);
 
   const handleEdit = () => {
     setEdit((prev) => !prev);
@@ -93,6 +86,7 @@ const Account = () => {
     if (e.target.dataset.index === "3") {
       return setNewPassword(e.target.value);
     }
+
     const updatedUserData = [...userData];
     updatedUserData[e.target.dataset.index].value = e.target.value;
 
@@ -116,6 +110,31 @@ const Account = () => {
     if (result.status === "ok") getAccountData();
   };
 
+  const sendAvatar = async (avatar) => {
+    const result = await fetch("/upload", {
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      body: avatar,
+    }).then((res) => res.json());
+
+    console.log(result);
+  };
+
+  const handleUpload = (e) => {
+    setAvatar(e.target.files[0]);
+  };
+
+  const handleSubmit = (e) => {
+    // e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("avatar", avatar);
+
+    sendAvatar(formData);
+  };
+
   return (
     <>
       <Wrapper bgc={bgc}></Wrapper>
@@ -124,6 +143,15 @@ const Account = () => {
         <Img img={image}>
           <Edit>
             <i className="far fa-edit"></i>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <InputFile
+                type="file"
+                accept="image/*"
+                name="avatar"
+                onChange={handleUpload}
+              />
+              <input type="submit" />
+            </form>
           </Edit>
         </Img>
         <Content>
@@ -149,23 +177,40 @@ const Account = () => {
                             placeholder={`New ${row.name}`}
                           ></TableInput>
                         ) : row.name === "Birth date" ? (
-                          <TableInput type="date"></TableInput>
+                          <TableInput
+                            type="date"
+                            value={row.value}
+                            onChange={handleChange}
+                            data-index={i}
+                          ></TableInput>
                         ) : (
                           <>
-                            <label>
+                            <Label>
                               <TableRadio
                                 type="radio"
                                 name="gender"
+                                value="male"
+                                checked={
+                                  userData[4].value === "male" ? true : false
+                                }
+                                onChange={handleChange}
+                                data-index={i}
                               ></TableRadio>
                               male
-                            </label>
-                            <label>
+                            </Label>
+                            <Label>
                               <TableRadio
                                 type="radio"
                                 name="gender"
-                              ></TableRadio>{" "}
+                                value="female"
+                                checked={
+                                  userData[4].value === "female" ? true : false
+                                }
+                                onChange={handleChange}
+                                data-index={i}
+                              ></TableRadio>
                               female
-                            </label>
+                            </Label>
                           </>
                         )}
                       </TableRight>
