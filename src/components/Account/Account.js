@@ -25,7 +25,6 @@ const Account = () => {
   const [userData, setUserData] = useState({});
   const [newPassword, setNewPassword] = useState("");
   const [image, setImage] = useState({});
-  const [avatar, setAvatar] = useState();
   const [edit, setEdit] = useState(false);
 
   const getAccountData = async () => {
@@ -110,31 +109,6 @@ const Account = () => {
     if (result.status === "ok") getAccountData();
   };
 
-  const sendAvatar = async (avatar) => {
-    const result = await fetch("/upload", {
-      method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: avatar,
-    }).then((res) => res.json());
-
-    console.log(result);
-  };
-
-  const handleUpload = (e) => {
-    setAvatar(e.target.files[0]);
-  };
-
-  const handleSubmit = (e) => {
-    // e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("avatar", avatar);
-
-    sendAvatar(formData);
-  };
-
   return (
     <>
       <Wrapper bgc={bgc}></Wrapper>
@@ -143,15 +117,6 @@ const Account = () => {
         <Img img={image}>
           <Edit>
             <i className="far fa-edit"></i>
-            <form onSubmit={handleSubmit} encType="multipart/form-data">
-              <InputFile
-                type="file"
-                accept="image/*"
-                name="avatar"
-                onChange={handleUpload}
-              />
-              <input type="submit" />
-            </form>
           </Edit>
         </Img>
         <Content>

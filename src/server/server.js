@@ -3,8 +3,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const multer = require("multer");
-const uuid = require("uuid").v4;
 
 const User = require("./model/user");
 
@@ -20,23 +18,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./src/resources/images");
-  },
-  filename: (req, file, cb) => {
-    const { originalname } = file;
-    cb(null, `${uuid()}-${originalname}`);
-  },
-});
-
-const upload = multer({ storage });
-
-app.post("/upload", (req, res) => {
-  console.log(req.body);
-  res.json({ status: "ok" });
-});
 
 app.post("/send-data", async (req, res) => {
   const {
