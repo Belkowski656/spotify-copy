@@ -3,8 +3,10 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const uuid = require("uuid").v4;
 
-const User = require("./model/user");
+const User = require("./models/user");
 
 const JWT_SECRET = "fanjasdfnjdsfin75454584858#@$@$!%dnfjdnf92ldsmkbfhud09";
 
@@ -19,6 +21,26 @@ const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    console.log(req.body);
+    cb(null, "./src/resources/images");
+  },
+  filename: (req, file, cb) => {
+    const { originalname } = file;
+    const fileName = `${uuid()}_${originalname}`;
+
+    cb(null, fileName);
+  },
+});
+
+const upload = multer({ storage });
+
+app.post("/upload", upload.single("avatar"), (req, res) => {
+  console.log(req.file);
+  res.redirect("/account");
+});
+
 app.post("/send-data", async (req, res) => {
   const {
     token,
@@ -28,8 +50,6 @@ app.post("/send-data", async (req, res) => {
     password: plainTextPassword,
     gender,
   } = req.body;
-
-  console.log(req.body);
 
   if (plainTextPassword === "") {
     try {

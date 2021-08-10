@@ -117,6 +117,11 @@ const Account = () => {
         <Img img={image}>
           <Edit>
             <i className="far fa-edit"></i>
+            <form action="/upload" method="POST" encType="multipart/form-data">
+              <InputFile type="file" name="avatar" accept="image/*" />
+              <button>Submit</button>
+            </form>
+            <input type="hidden" name="token" value="1234" />
           </Edit>
         </Img>
         <Content>
