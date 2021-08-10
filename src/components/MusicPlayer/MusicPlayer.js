@@ -22,7 +22,9 @@ const MusicPlayer = () => {
       }),
     }).then((res) => res.json());
 
-    setAvatar(require(`../../resources/images/${result.avatar}`).default);
+    setAvatar(
+      require(`../../resources/images/avatars/${result.avatar}`).default
+    );
   };
 
   useEffect(() => {

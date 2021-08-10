@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     console.log(req.body);
-    cb(null, "./src/resources/images");
+    cb(null, "./src/resources/images/avatars");
   },
   filename: (req, file, cb) => {
     const { originalname } = file;
@@ -36,9 +36,24 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.post("/upload", upload.single("avatar"), (req, res) => {
-  console.log(req.file);
-  res.redirect("/account");
+app.post("/upload", upload.single("avatar"), async (req, res) => {
+  const image = req.file.filename;
+  const token = req.body.token;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const _id = user.id;
+
+    await User.updateOne(
+      { _id },
+      {
+        $set: { image },
+      }
+    );
+    res.redirect("/account");
+  } catch (error) {
+    res.end({ status: "error", error: error });
+  }
 });
 
 app.post("/send-data", async (req, res) => {

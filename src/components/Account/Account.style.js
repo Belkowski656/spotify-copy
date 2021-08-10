@@ -52,25 +52,64 @@ export const Edit = styled.label`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: gray;
-  opacity: 0;
-  border-radius: 50%;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.3s;
-
+  ::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    line-height: 150px;
+    background-color: gray;
+    opacity: 0;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f044";
+    font-size: 40px;
+  }
   i {
     line-height: 150px;
     color: white;
     font-size: 40px;
   }
 
-  ${Img}:hover & {
+  ${Img}:hover &::after {
     opacity: 0.9;
   }
 `;
 
+export const Submit = styled.button`
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 1;
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  border: 2px solid white;
+  border-radius: 20px;
+  cursor: pointer;
+
+  :hover {
+    color: #1ed760;
+    background-color: #fff;
+  }
+`;
+
+export const Form = styled.form`
+  position: relative;
+`;
+
 export const InputFile = styled.input`
+  display: none;
+`;
+
+export const InputToken = styled.input`
   display: none;
 `;
 

@@ -13,8 +13,11 @@ import {
   TableRadio,
   Label,
   InputFile,
+  InputToken,
   Edit,
   Button,
+  Submit,
+  Form,
   ButtonEdit,
   ButtonWrapper,
 } from "./Account.style";
@@ -26,6 +29,7 @@ const Account = () => {
   const [newPassword, setNewPassword] = useState("");
   const [image, setImage] = useState({});
   const [edit, setEdit] = useState(false);
+  const [fileEdit, setFileEdit] = useState(false);
 
   const getAccountData = async () => {
     const result = await fetch("/get-account-data", {
@@ -64,7 +68,7 @@ const Account = () => {
         { value: gender, name: "Gender" },
       ]);
 
-      setImage(require(`../../resources/images/${image}`).default);
+      setImage(require(`../../resources/images/avatars/${image}`).default);
     }
   };
 
@@ -109,21 +113,33 @@ const Account = () => {
     if (result.status === "ok") getAccountData();
   };
 
+  const handleFileChange = () => {
+    setFileEdit(true);
+  };
+
   return (
     <>
       <Wrapper bgc={bgc}></Wrapper>
       <Box>
         <Title>Account details</Title>
-        <Img img={image}>
-          <Edit>
-            <i className="far fa-edit"></i>
-            <form action="/upload" method="POST" encType="multipart/form-data">
-              <InputFile type="file" name="avatar" accept="image/*" />
-              <button>Submit</button>
-            </form>
-            <input type="hidden" name="token" value="1234" />
-          </Edit>
-        </Img>
+        <Form action="/upload" method="POST" encType="multipart/form-data">
+          <Img img={image}>
+            <Edit>
+              <InputFile
+                type="file"
+                name="avatar"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+            </Edit>
+          </Img>
+          <InputToken
+            type="text"
+            value={sessionStorage.getItem("token")}
+            name="token"
+          />
+          {fileEdit ? <Submit>Save</Submit> : null}
+        </Form>
         <Content>
           <tbody>
             {userData.length
