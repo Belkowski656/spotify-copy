@@ -135,7 +135,7 @@ const Account = () => {
           </Img>
           <InputToken
             type="text"
-            value={sessionStorage.getItem("token")}
+            defaultValue={sessionStorage.getItem("token")}
             name="token"
           />
           {fileEdit ? <Submit>Save</Submit> : null}
