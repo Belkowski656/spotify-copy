@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useMemo } from "react";
+import { useState, useEffect, useContext } from "react";
 import SongsContext from "../../Context/songsContext";
 import ReactAudioPlayer from "react-audio-player";
 
@@ -36,8 +36,11 @@ const Player = ({ index }) => {
   const [audioValue, setAudioValue] = useState(0);
   const [audioMaxValue, setAudioMaxValue] = useState(0);
 
-  const [songIndex, setSongIndex] = useState(0);
   const [song, setSong] = useState("");
+  const [songIndex, setSongIndex] = useState(0);
+  const [songImage, setSongImage] = useState("");
+  const [songTitle, setSongTitle] = useState("");
+  const [songAuthor, setSongAuthor] = useState("");
 
   const songs = useContext(SongsContext);
 
@@ -67,6 +70,16 @@ const Player = ({ index }) => {
   useEffect(() => {
     setSongIndex(index);
   }, [index]);
+
+  useEffect(() => {
+    if (songs.length) {
+      setSongImage(
+        require(`../../resources/images/${songs[songIndex].image}`).default
+      );
+      setSongTitle(`${songs[songIndex].title}`);
+      setSongAuthor(`${songs[songIndex].author}`);
+    }
+  }, [songIndex, songs]);
 
   const handleOnCanPlay = () => {
     const audio = document.querySelector("#player");
@@ -118,15 +131,16 @@ const Player = ({ index }) => {
   const next = () => {
     setSongIndex((prev) => (prev = prev + 1));
   };
+
   return (
     <>
       <Wrapper>
         <Content>
           <Info>
-            <Img img={img}></Img>
+            <Img img={songImage}></Img>
             <InfoContainer>
-              <Title>Example</Title>
-              <Name>Example Name</Name>
+              <Title>{songTitle}</Title>
+              <Name>{songAuthor}</Name>
             </InfoContainer>
             <Like like={like} onClick={() => setLike((prev) => !prev)}>
               <i className="far fa-heart"></i>
