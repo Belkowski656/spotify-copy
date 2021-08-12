@@ -1,8 +1,6 @@
 import { Wrapper, Image, Info, Title, Name, Play, Add } from "./MusicBox.style";
 
-const MusicBox = (props) => {
-  const { id, name, title, image, author } = props;
-
+const MusicBox = ({ id, name, title, image, author }) => {
   return (
     <>
       <Wrapper>
