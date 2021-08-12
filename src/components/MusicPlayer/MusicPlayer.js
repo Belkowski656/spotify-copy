@@ -11,6 +11,7 @@ const MusicPlayer = () => {
   const [active, setActive] = useState(false);
   const [avatar, setAvatar] = useState("");
   const [songs, setSongs] = useState([]);
+  const [songIndex, setSongIndex] = useState(0);
 
   const getToken = async () => {
     const result = await fetch("/player", {
@@ -38,6 +39,10 @@ const MusicPlayer = () => {
     if (!sessionStorage.getItem("token")) document.location.href = "/login";
   };
 
+  const handlePlay = (index) => {
+    setSongIndex(index);
+  };
+
   const getSongs = async () => {
     fetch("/songs")
       .then((res) => res.json())
@@ -49,6 +54,7 @@ const MusicPlayer = () => {
             title: song.title,
             author: song.author,
             image: song.image,
+            handlePlay: handlePlay,
           };
         });
 
@@ -61,7 +67,7 @@ const MusicPlayer = () => {
       {verify()}
       <SongsProvider value={songs}>
         <SideNav active={active} setActive={setActive} />
-        <Player />
+        <Player index={songIndex} />
         <Profil avatar={avatar} />
         <Outlet />
       </SongsProvider>

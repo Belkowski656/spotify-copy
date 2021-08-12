@@ -6,7 +6,7 @@ import { Wrapper, Content, Title } from "../Main/Main.style";
 const Main = () => {
   const songs = useContext(SongsContext);
 
-  const MusicBoxs = songs.map((song) => {
+  const MusicBoxs = songs.map((song, index) => {
     return (
       <MusicBox
         key={song.id}
@@ -15,6 +15,8 @@ const Main = () => {
         title={song.title}
         image={song.image}
         author={song.author}
+        handlePlay={song.handlePlay}
+        index={index}
       />
     );
   });

@@ -8,7 +8,7 @@ import { Wrapper, Content, SearchInput, Form } from "./Search.style";
 const Search = () => {
   const songs = useContext(SongsContext);
 
-  const MusicBoxs = songs.map((song) => {
+  const MusicBoxs = songs.map((song, index) => {
     return (
       <MusicBox
         key={song.id}
@@ -17,6 +17,8 @@ const Search = () => {
         title={song.title}
         image={song.image}
         author={song.author}
+        handlePlay={song.handlePlay}
+        index={index}
       />
     );
   });

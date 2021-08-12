@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useContext } from "react";
+import SongsContext from "../../Context/songsContext";
 import ReactAudioPlayer from "react-audio-player";
 
 import {
@@ -22,10 +24,9 @@ import {
   Content,
 } from "./Player.style";
 
-import music from "../../resources/music/music.mp3";
 import img from "../../resources/images/image.jpg";
 
-const Player = () => {
+const Player = ({ index }) => {
   const [play, setPlay] = useState(false);
   const [like, setLike] = useState(false);
 
@@ -36,16 +37,37 @@ const Player = () => {
   const [audioValue, setAudioValue] = useState(0);
   const [audioMaxValue, setAudioMaxValue] = useState(0);
 
+  const [songIndex, setSongIndex] = useState(0);
+  const [song, setSong] = useState("");
+
+  const songs = useContext(SongsContext);
+
   const handlePlay = () => {
     setPlay((prev) => !prev);
   };
 
   useEffect(() => {
+    console.log("useEffect");
     const audio = document.querySelector("#player");
 
     if (play) audio.play();
     else audio.pause();
-  });
+  }, [play]);
+
+  useEffect(() => {
+    if (songIndex < 0) return setSongIndex(songs.length - 1);
+    if (songIndex >= songs.length) return setSongIndex(0);
+
+    if (songs.length) {
+      setSong(
+        require(`../../resources/music/${songs[songIndex].name}`).default
+      );
+    }
+  }, [songIndex, songs]);
+
+  useEffect(() => {
+    setSongIndex(index);
+  }, [index]);
 
   const handleOnCanPlay = () => {
     const audio = document.querySelector("#player");
@@ -76,6 +98,28 @@ const Player = () => {
     setAudioValue(e.target.value);
   };
 
+  const handleEnd = () => {
+    setSongIndex((prev) => (prev = prev + 1));
+  };
+
+  const handleAbort = () => {
+    console.log("abort");
+    setAudioValue(0);
+
+    const audio = document.querySelector("#player");
+
+    audio.play();
+    setPlay(true);
+  };
+
+  const previous = () => {
+    setSongIndex((prev) => (prev = prev - 1));
+  };
+
+  const next = () => {
+    setSongIndex((prev) => (prev = prev + 1));
+  };
+  console.log("render");
   return (
     <>
       <Wrapper>
@@ -92,15 +136,17 @@ const Player = () => {
           </Info>
           <ReactAudioPlayer
             id={"player"}
-            src={music}
+            src={song}
             type="audio/mpeg"
             volume={soundValue / 100}
             onCanPlay={handleOnCanPlay}
             onListen={handleListen}
             listenInterval={1000}
+            onEnded={handleEnd}
+            onAbort={handleAbort}
           ></ReactAudioPlayer>
           <Panel>
-            <Previous>
+            <Previous onClick={previous}>
               <i className="fas fa-step-forward"></i>
             </Previous>
             <Play onClick={handlePlay}>
@@ -110,11 +156,15 @@ const Player = () => {
                 <i className="fas fa-play"></i>
               )}
             </Play>
-            <Next>
+            <Next onClick={next}>
               <i className="fas fa-step-forward"></i>
             </Next>
             <Progress>
-              <Time>0:00</Time>
+              <Time>{`${Math.floor(audioValue / 60)}:${
+                audioValue % 60 < 10
+                  ? "0" + Math.floor(audioValue % 60)
+                  : Math.floor(audioValue % 60)
+              }`}</Time>
               <ProgressContainer
                 type="range"
                 onChange={handleAudioValueChange}
