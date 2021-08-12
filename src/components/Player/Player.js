@@ -86,7 +86,9 @@ const Player = ({ index }) => {
     const minutes = Math.floor(audio.duration / 60);
     const seconds = Math.floor(audio.duration % 60);
 
-    setAudioDuration(`${minutes}:${seconds}`);
+    setAudioDuration(
+      `${minutes}:${seconds.toString().length === 1 ? "0" + seconds : seconds}`
+    );
     setAudioMaxValue(Math.floor(audio.duration));
   };
 
