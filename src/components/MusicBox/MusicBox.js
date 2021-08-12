@@ -1,15 +1,15 @@
 import { Wrapper, Image, Info, Title, Name, Play, Add } from "./MusicBox.style";
 
-import img from "../../resources/images/image.jpg";
+const MusicBox = (props) => {
+  const { id, name, title, image, author } = props;
 
-const MusicBox = () => {
   return (
     <>
       <Wrapper>
-        <Image img={img} />
+        <Image img={require(`../../resources/images/${image}`).default} />
         <Info>
-          <Title>Example</Title>
-          <Name>Example Name</Name>
+          <Title>{title}</Title>
+          <Name>{author}</Name>
         </Info>
         <Play>
           <i className="fas fa-play"></i>

@@ -7,6 +7,7 @@ const multer = require("multer");
 const uuid = require("uuid").v4;
 
 const User = require("./models/user");
+const Music = require("./models/Music");
 
 const JWT_SECRET = "fanjasdfnjdsfin75454584858#@$@$!%dnfjdnf92ldsmkbfhud09";
 
@@ -20,6 +21,12 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
+
+app.get("/songs", async (req, res) => {
+  const songs = await Music.find({}).lean();
+
+  res.json(songs);
+});
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
