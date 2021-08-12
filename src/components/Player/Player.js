@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useContext } from "react";
+import { useState, useEffect, useContext, useMemo } from "react";
 import SongsContext from "../../Context/songsContext";
 import ReactAudioPlayer from "react-audio-player";
 
@@ -119,7 +118,6 @@ const Player = ({ index }) => {
   const next = () => {
     setSongIndex((prev) => (prev = prev + 1));
   };
-  console.log("render");
   return (
     <>
       <Wrapper>

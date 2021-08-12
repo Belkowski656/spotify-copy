@@ -33,7 +33,7 @@ const MusicPlayer = () => {
     verify();
     getToken();
     getSongs();
-  });
+  }, []);
 
   const verify = () => {
     if (!sessionStorage.getItem("token")) document.location.href = "/login";
@@ -61,14 +61,14 @@ const MusicPlayer = () => {
         setSongs(songsArr);
       });
   };
-
+  console.log("render-musicPlayer");
   return (
     <>
       {verify()}
+      <SideNav active={active} setActive={setActive} />
+      <Profil avatar={avatar} />
       <SongsProvider value={songs}>
-        <SideNav active={active} setActive={setActive} />
         <Player index={songIndex} />
-        <Profil avatar={avatar} />
         <Outlet />
       </SongsProvider>
     </>
