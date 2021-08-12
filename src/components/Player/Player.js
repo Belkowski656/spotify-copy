@@ -49,7 +49,6 @@ const Player = ({ index }) => {
   };
 
   useEffect(() => {
-    console.log("useEffect");
     const audio = document.querySelector("#player");
 
     if (play) audio.play();
@@ -115,7 +114,6 @@ const Player = ({ index }) => {
   };
 
   const handleAbort = () => {
-    console.log("abort");
     setAudioValue(0);
 
     const audio = document.querySelector("#player");

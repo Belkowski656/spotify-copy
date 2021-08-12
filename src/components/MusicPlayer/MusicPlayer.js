@@ -61,7 +61,6 @@ const MusicPlayer = () => {
         setSongs(songsArr);
       });
   };
-  console.log("render-musicPlayer");
   return (
     <>
       {verify()}
