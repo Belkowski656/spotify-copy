@@ -24,7 +24,7 @@ const Search = () => {
     setSongsToShow(songsArr);
   }, [search, songs]);
 
-  const musicBoxs = songsToShow.map((song, index) => {
+  const musicBoxs = songsToShow.map((song) => {
     return (
       <MusicBox
         key={song.id}
@@ -34,7 +34,7 @@ const Search = () => {
         image={song.image}
         author={song.author}
         handlePlay={song.handlePlay}
-        index={index}
+        index={song.index}
       />
     );
   });

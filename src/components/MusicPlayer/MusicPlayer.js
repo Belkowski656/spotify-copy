@@ -12,6 +12,7 @@ const MusicPlayer = () => {
   const [avatar, setAvatar] = useState("");
   const [songs, setSongs] = useState([]);
   const [songIndex, setSongIndex] = useState(0);
+  const [play, setPlay] = useState(false);
 
   const getToken = async () => {
     const result = await fetch("/player", {
@@ -30,6 +31,7 @@ const MusicPlayer = () => {
   };
 
   useEffect(() => {
+    console.log("test");
     verify();
     getToken();
     getSongs();
@@ -41,13 +43,14 @@ const MusicPlayer = () => {
 
   const handlePlay = (index) => {
     setSongIndex(index);
+    setPlay(true);
   };
 
   const getSongs = async () => {
     fetch("/songs")
       .then((res) => res.json())
       .then((data) => {
-        const songsArr = data.map((song) => {
+        const songsArr = data.map((song, index) => {
           return {
             id: song._id,
             name: song.name,
@@ -55,6 +58,7 @@ const MusicPlayer = () => {
             author: song.author,
             image: song.image,
             handlePlay: handlePlay,
+            index,
           };
         });
 
@@ -67,7 +71,7 @@ const MusicPlayer = () => {
       <SideNav active={active} setActive={setActive} />
       <Profil avatar={avatar} />
       <SongsProvider value={songs}>
-        <Player index={songIndex} />
+        <Player index={songIndex} play={play} setPlay={setPlay} />
         <Outlet />
       </SongsProvider>
     </>

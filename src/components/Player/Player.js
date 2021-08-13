@@ -25,8 +25,7 @@ import {
 
 import img from "../../resources/images/image.jpg";
 
-const Player = ({ index }) => {
-  const [play, setPlay] = useState(false);
+const Player = ({ index, play, setPlay }) => {
   const [like, setLike] = useState(false);
 
   const [audioDuration, setAudioDuration] = useState(`0:00`);
