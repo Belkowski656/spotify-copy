@@ -8,7 +8,7 @@ import { Wrapper, Content, SearchInput, Form } from "./Search.style";
 const Search = () => {
   const [search, setSearch] = useState("");
   const [songsToShow, setSongsToShow] = useState([]);
-  const songs = useContext(SongsContext);
+  const songs = useContext(SongsContext).songs;
 
   const handleChange = (e) => {
     setSearch(e.target.value.toLowerCase());

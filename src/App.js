@@ -10,6 +10,7 @@ import Main from "./components/Main/Main";
 import Search from "./components/Search/Search";
 import ShowPlaylist from "./components/ShowPlaylist/ShowPlaylist";
 import Library from "./components/Library/Library";
+import Liked from "./components/Liked/Liked";
 
 import { GlobalStyle } from "./GlobalStyles";
 
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="search" element={<Search />} />
           <Route path="library" element={<Library />} />
           <Route path="playlist" element={<ShowPlaylist />} />
+          <Route path="liked" element={<Liked />} />
         </Route>
         <Route path="signup" element={<SignUp />} />
         <Route path="login" element={<LogIn />} />

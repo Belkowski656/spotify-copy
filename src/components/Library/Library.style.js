@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Wrapper = styled.div`
   background-color: rgb(28, 28, 28);
@@ -26,7 +27,7 @@ export const Content = styled.div`
   }
 `;
 
-export const LikedSongs = styled.div`
+export const LikedSongs = styled(Link)`
   position: relative;
   width: 100%;
   height: 150px;
@@ -34,6 +35,7 @@ export const LikedSongs = styled.div`
   border-radius: 10px;
   cursor: pointer;
   margin-top: 30px;
+  color: white;
 
   @media (min-width: 576px) {
     width: 48%;

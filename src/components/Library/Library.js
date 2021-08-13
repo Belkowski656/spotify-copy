@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import SongsContext from "../../Context/songsContext";
+
 import {
   Wrapper,
   PageTitle,
@@ -11,15 +14,16 @@ import {
 import Playlist from "../Playlist/Playlist";
 
 const Library = () => {
+  const likedSongs = useContext(SongsContext).likedSongs;
   return (
     <>
       <Wrapper>
         <PageTitle>Playlists</PageTitle>
         <Content>
-          <LikedSongs>
+          <LikedSongs to="/player/liked">
             <Box>
               <Title>Liked Songs</Title>
-              <Number>10 liked songs</Number>
+              <Number>{likedSongs.length} liked songs</Number>
             </Box>
           </LikedSongs>
           <Playlist />

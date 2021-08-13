@@ -39,7 +39,7 @@ const Player = ({ index, play, setPlay }) => {
   const [songTitle, setSongTitle] = useState("");
   const [songAuthor, setSongAuthor] = useState("");
 
-  const songs = useContext(SongsContext);
+  const songs = useContext(SongsContext).songs;
 
   const handlePlay = () => {
     setPlay((prev) => !prev);

@@ -13,6 +13,7 @@ const MusicPlayer = () => {
   const [songs, setSongs] = useState([]);
   const [songIndex, setSongIndex] = useState(0);
   const [play, setPlay] = useState(false);
+  const [likedSongs, setLikedSongs] = useState([]);
 
   const getToken = async () => {
     const result = await fetch("/player", {
@@ -31,7 +32,6 @@ const MusicPlayer = () => {
   };
 
   useEffect(() => {
-    console.log("test");
     verify();
     getToken();
     getSongs();
@@ -65,12 +65,35 @@ const MusicPlayer = () => {
         setSongs(songsArr);
       });
   };
+
+  useEffect(() => {
+    fetchLikedSongs();
+  }, [songs]);
+
+  const fetchLikedSongs = async () => {
+    const results = await fetch("/fetch-liked-songs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: sessionStorage.getItem("token"),
+      }),
+    }).then((res) => res.json());
+
+    const likedSongsArr = songs.filter((song) => {
+      for (let i = 0; i < results.length; i++) {
+        if (song.id === results[i]) return songs[i];
+      }
+      return null;
+    });
+
+    setLikedSongs(likedSongsArr);
+  };
   return (
     <>
       {verify()}
       <SideNav active={active} setActive={setActive} />
       <Profil avatar={avatar} />
-      <SongsProvider value={songs}>
+      <SongsProvider value={{ songs, likedSongs }}>
         <Player index={songIndex} play={play} setPlay={setPlay} />
         <Outlet />
       </SongsProvider>

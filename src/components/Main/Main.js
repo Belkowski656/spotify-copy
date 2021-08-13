@@ -4,8 +4,7 @@ import MusicBox from "../MusicBox/MusicBox";
 import { Wrapper, Content, Title } from "../Main/Main.style";
 
 const Main = () => {
-  const songs = useContext(SongsContext);
-
+  const songs = useContext(SongsContext).songs;
   const MusicBoxs = songs.map((song) => {
     return (
       <MusicBox

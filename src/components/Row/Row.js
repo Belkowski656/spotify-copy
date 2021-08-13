@@ -2,9 +2,7 @@ import { useState } from "react";
 
 import { Wrapper, Number, Title, Author, Duration, Img } from "./Row.style";
 
-import img from "../../resources/images/image.jpg";
-
-const Row = () => {
+const Row = ({ image, title, author, name, rowIndex }) => {
   const [active, setActive] = useState(false);
 
   const handleHover = () => {
@@ -17,12 +15,12 @@ const Row = () => {
 
   return (
     <Wrapper onMouseEnter={handleHover} onMouseLeave={handleLeave}>
-      <Number>{active ? <i className="fas fa-play"></i> : 1}</Number>
+      <Number>{active ? <i className="fas fa-play"></i> : rowIndex}</Number>
       <Title>
-        <Img img={img} />
-        Warriors 2016
+        <Img img={image} />
+        {title}
       </Title>
-      <Author>Imagine Dragons, Riot Games</Author>
+      <Author>{author}</Author>
       <Duration>2:52</Duration>
     </Wrapper>
   );

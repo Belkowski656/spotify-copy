@@ -23,6 +23,21 @@ const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
+app.post("/fetch-liked-songs", async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const ownerId = user.id;
+
+    const liked = await Liked.findOne({ ownerId }).lean();
+
+    res.json(liked.songs);
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
+
 app.post("/is-song-liked", async (req, res) => {
   const { token, songId } = req.body;
 
