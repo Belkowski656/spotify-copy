@@ -37,6 +37,7 @@ const ShowPlaylist = () => {
       id={song.id}
       handlePlay={song.handlePlay}
       author={song.author}
+      duration={song.duration}
     />
   ));
 

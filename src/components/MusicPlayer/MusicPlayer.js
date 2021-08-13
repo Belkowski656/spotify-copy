@@ -61,6 +61,7 @@ const MusicPlayer = () => {
             image: song.image,
             handlePlay: handlePlay,
             index,
+            duration: song.duration,
           };
         });
 
@@ -94,7 +95,7 @@ const MusicPlayer = () => {
   const handlePlayPlaylist = (songs) => {
     setSongsFromPlaylist(songs);
   };
-
+  console.log(songs);
   return (
     <>
       {verify()}

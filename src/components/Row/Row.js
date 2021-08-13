@@ -2,7 +2,16 @@ import { useState } from "react";
 
 import { Wrapper, Number, Title, Author, Duration, Img } from "./Row.style";
 
-const Row = ({ image, title, author, name, rowIndex, index, handlePlay }) => {
+const Row = ({
+  image,
+  title,
+  author,
+  name,
+  rowIndex,
+  index,
+  handlePlay,
+  duration,
+}) => {
   const [active, setActive] = useState(false);
 
   const handleHover = () => {
@@ -27,7 +36,7 @@ const Row = ({ image, title, author, name, rowIndex, index, handlePlay }) => {
         {title}
       </Title>
       <Author>{author}</Author>
-      <Duration>2:52</Duration>
+      <Duration>{duration}</Duration>
     </Wrapper>
   );
 };
