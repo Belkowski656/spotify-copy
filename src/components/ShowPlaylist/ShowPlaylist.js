@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import SongsContext from "../../Context/songsContext";
 
 import Row from "../Row/Row";
@@ -21,6 +21,8 @@ import {
 } from "./ShowPlaylist.style";
 
 const ShowPlaylist = () => {
+  const [username, setUsername] = useState("");
+
   const likedSongs = useContext(SongsContext).likedSongs;
   const handlePlayPlaylist = useContext(SongsContext).handlePlayPlaylist;
 
@@ -38,6 +40,20 @@ const ShowPlaylist = () => {
     />
   ));
 
+  const getUsername = async () => {
+    const result = await fetch("/get-username", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: sessionStorage.getItem("token"),
+      }),
+    }).then((res) => res.json());
+
+    setUsername(result);
+  };
+
+  useEffect(getUsername);
+
   return (
     <>
       <Wrapper>
@@ -46,7 +62,7 @@ const ShowPlaylist = () => {
             <Img img={require("../../resources/images/like.png").default} />
             <Info>
               <Title>Liked Songs</Title>
-              <Author>Example Name</Author>
+              <Author>{username}</Author>
             </Info>
           </Content>
         </Header>

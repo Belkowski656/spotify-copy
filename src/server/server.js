@@ -23,6 +23,19 @@ const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
+app.post("/get-username", async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    console.log(user);
+
+    res.json(user.username);
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
+
 app.post("/fetch-liked-songs", async (req, res) => {
   const { token } = req.body;
 
