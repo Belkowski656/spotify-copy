@@ -8,6 +8,7 @@ const uuid = require("uuid").v4;
 
 const User = require("./models/user");
 const Music = require("./models/Music");
+const Liked = require("./models/liked");
 
 const JWT_SECRET = "fanjasdfnjdsfin75454584858#@$@$!%dnfjdnf92ldsmkbfhud09";
 
@@ -21,6 +22,69 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
+
+app.post("/is-song-liked", async (req, res) => {
+  const { token, songId } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const ownerId = user.id;
+
+    const liked = await Liked.findOne({ ownerId, songs: songId }).lean();
+    if (liked === null) return res.json({ liked: false });
+    else return res.json({ liked: true });
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
+
+app.post("/remove-song-from-liked", async (req, res) => {
+  const { token, songId } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const ownerId = user.id;
+
+    await Liked.updateOne(
+      { ownerId },
+      {
+        $pull: { songs: songId },
+      }
+    );
+    res.json({ status: "ok" });
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
+
+app.post("/add-song-to-liked", async (req, res) => {
+  const { token, songId } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const ownerId = user.id;
+
+    const liked = await Liked.findOne({ ownerId }).lean();
+    if (liked === null) {
+      console.log("create");
+      await Liked.create({
+        ownerId,
+        songs: songId,
+      });
+      res.json({ status: "ok" });
+    } else {
+      await Liked.updateOne(
+        { ownerId },
+        {
+          $push: { songs: songId },
+        }
+      );
+      res.json({ status: "ok" });
+    }
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
 
 app.get("/songs", async (req, res) => {
   const songs = await Music.find({}).lean();

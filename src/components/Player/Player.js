@@ -23,8 +23,6 @@ import {
   Content,
 } from "./Player.style";
 
-import img from "../../resources/images/image.jpg";
-
 const Player = ({ index, play, setPlay }) => {
   const [like, setLike] = useState(false);
 
@@ -47,6 +45,20 @@ const Player = ({ index, play, setPlay }) => {
     setPlay((prev) => !prev);
   };
 
+  const isSongLiked = async () => {
+    const result = await fetch("/is-song-liked", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        songId: songs[songIndex].id,
+        token: sessionStorage.getItem("token"),
+      }),
+    }).then((res) => res.json());
+
+    setLike(result.liked);
+    return result.liked;
+  };
+
   useEffect(() => {
     const audio = document.querySelector("#player");
 
@@ -62,22 +74,19 @@ const Player = ({ index, play, setPlay }) => {
       setSong(
         require(`../../resources/music/${songs[songIndex].name}`).default
       );
+      setSongImage(
+        require(`../../resources/images/${songs[songIndex].image}`).default
+      );
+      setSongTitle(`${songs[songIndex].title}`);
+      setSongAuthor(`${songs[songIndex].author}`);
+
+      isSongLiked();
     }
   }, [songIndex, songs]);
 
   useEffect(() => {
     setSongIndex(index);
   }, [index]);
-
-  useEffect(() => {
-    if (songs.length) {
-      setSongImage(
-        require(`../../resources/images/${songs[songIndex].image}`).default
-      );
-      setSongTitle(`${songs[songIndex].title}`);
-      setSongAuthor(`${songs[songIndex].author}`);
-    }
-  }, [songIndex, songs]);
 
   const handleOnCanPlay = () => {
     const audio = document.querySelector("#player");
@@ -131,6 +140,41 @@ const Player = ({ index, play, setPlay }) => {
     setSongIndex((prev) => (prev = prev + 1));
   };
 
+  const addSongToLiked = async () => {
+    const response = await isSongLiked();
+    if (response) {
+      const songId = songs[songIndex].id;
+
+      const result = await fetch("/remove-song-from-liked", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          songId,
+          token: sessionStorage.getItem("token"),
+        }),
+      }).then((res) => res.json());
+
+      if (result.status === "ok") {
+        isSongLiked();
+      }
+    } else {
+      const songId = songs[songIndex].id;
+
+      const result = await fetch("/add-song-to-liked", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          songId,
+          token: sessionStorage.getItem("token"),
+        }),
+      }).then((res) => res.json());
+
+      if (result.status === "ok") {
+        isSongLiked();
+      }
+    }
+  };
+
   return (
     <>
       <Wrapper>
@@ -141,7 +185,7 @@ const Player = ({ index, play, setPlay }) => {
               <Title>{songTitle}</Title>
               <Name>{songAuthor}</Name>
             </InfoContainer>
-            <Like like={like} onClick={() => setLike((prev) => !prev)}>
+            <Like like={like} onClick={addSongToLiked}>
               <i className="far fa-heart"></i>
             </Like>
           </Info>
