@@ -40,23 +40,38 @@ const Player = ({ index, play, setPlay }) => {
   const [songAuthor, setSongAuthor] = useState("");
 
   const songs = useContext(SongsContext).songs;
+  const songsFromPlaylist = useContext(SongsContext).songsFromPlaylist;
 
   const handlePlay = () => {
     setPlay((prev) => !prev);
   };
 
   const isSongLiked = async () => {
-    const result = await fetch("/is-song-liked", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        songId: songs[songIndex].id,
-        token: sessionStorage.getItem("token"),
-      }),
-    }).then((res) => res.json());
+    if (!songsFromPlaylist.length) {
+      const result = await fetch("/is-song-liked", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          songId: songs[songIndex].id,
+          token: sessionStorage.getItem("token"),
+        }),
+      }).then((res) => res.json());
 
-    setLike(result.liked);
-    return result.liked;
+      setLike(result.liked);
+      return result.liked;
+    } else {
+      const result = await fetch("/is-song-liked", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          songId: songsFromPlaylist[songIndex].id,
+          token: sessionStorage.getItem("token"),
+        }),
+      }).then((res) => res.json());
+
+      setLike(result.liked);
+      return result.liked;
+    }
   };
 
   useEffect(() => {
@@ -67,22 +82,42 @@ const Player = ({ index, play, setPlay }) => {
   }, [play]);
 
   useEffect(() => {
-    if (songIndex < 0) return setSongIndex(songs.length - 1);
-    if (songIndex >= songs.length) return setSongIndex(0);
+    if (!songsFromPlaylist.length) {
+      if (songIndex < 0) return setSongIndex(songs.length - 1);
+      if (songIndex >= songs.length) return setSongIndex(0);
 
-    if (songs.length) {
-      setSong(
-        require(`../../resources/music/${songs[songIndex].name}`).default
-      );
-      setSongImage(
-        require(`../../resources/images/${songs[songIndex].image}`).default
-      );
-      setSongTitle(`${songs[songIndex].title}`);
-      setSongAuthor(`${songs[songIndex].author}`);
+      if (songs.length) {
+        setSong(
+          require(`../../resources/music/${songs[songIndex].name}`).default
+        );
+        setSongImage(
+          require(`../../resources/images/${songs[songIndex].image}`).default
+        );
+        setSongTitle(`${songs[songIndex].title}`);
+        setSongAuthor(`${songs[songIndex].author}`);
 
-      isSongLiked();
+        isSongLiked();
+      }
+    } else {
+      if (songIndex < 0) return setSongIndex(songsFromPlaylist.length - 1);
+      if (songIndex >= songsFromPlaylist.length) return setSongIndex(0);
+
+      if (songsFromPlaylist.length) {
+        setSong(
+          require(`../../resources/music/${songsFromPlaylist[songIndex].name}`)
+            .default
+        );
+        setSongImage(
+          require(`../../resources/images/${songsFromPlaylist[songIndex].image}`)
+            .default
+        );
+        setSongTitle(`${songsFromPlaylist[songIndex].title}`);
+        setSongAuthor(`${songsFromPlaylist[songIndex].author}`);
+
+        isSongLiked();
+      }
     }
-  }, [songIndex, songs]);
+  }, [songIndex, songs, songsFromPlaylist]);
 
   useEffect(() => {
     setSongIndex(index);

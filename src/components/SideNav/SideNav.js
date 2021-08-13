@@ -32,7 +32,7 @@ const SideNav = ({ active, setActive }) => {
           <Container>
             <Element>Create Playlist</Element>
             <Element>
-              <StyledLink to="liked">Liked Songs</StyledLink>
+              <StyledLink to="playlist">Liked Songs</StyledLink>
             </Element>
           </Container>
           <Playlists>

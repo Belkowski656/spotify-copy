@@ -11,6 +11,7 @@ const MusicPlayer = () => {
   const [active, setActive] = useState(false);
   const [avatar, setAvatar] = useState("");
   const [songs, setSongs] = useState([]);
+  const [songsFromPlaylist, setSongsFromPlaylist] = useState([]);
   const [songIndex, setSongIndex] = useState(0);
   const [play, setPlay] = useState(false);
   const [likedSongs, setLikedSongs] = useState([]);
@@ -42,6 +43,7 @@ const MusicPlayer = () => {
   };
 
   const handlePlay = (index) => {
+    setSongsFromPlaylist([]);
     setSongIndex(index);
     setPlay(true);
   };
@@ -88,12 +90,19 @@ const MusicPlayer = () => {
 
     setLikedSongs(likedSongsArr);
   };
+
+  const handlePlayPlaylist = (songs) => {
+    setSongsFromPlaylist(songs);
+  };
+
   return (
     <>
       {verify()}
       <SideNav active={active} setActive={setActive} />
       <Profil avatar={avatar} />
-      <SongsProvider value={{ songs, likedSongs }}>
+      <SongsProvider
+        value={{ songs, likedSongs, handlePlayPlaylist, songsFromPlaylist }}
+      >
         <Player index={songIndex} play={play} setPlay={setPlay} />
         <Outlet />
       </SongsProvider>

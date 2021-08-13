@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import SongsContext from "../../Context/songsContext";
+
 import Row from "../Row/Row";
 
 import {
@@ -17,24 +20,39 @@ import {
   TableHeader,
 } from "./ShowPlaylist.style";
 
-import img from "../../resources/images/image.jpg";
-
 const ShowPlaylist = () => {
+  const likedSongs = useContext(SongsContext).likedSongs;
+  const handlePlayPlaylist = useContext(SongsContext).handlePlayPlaylist;
+
+  const rows = likedSongs.map((song, i) => (
+    <Row
+      key={i}
+      rowIndex={i + 1}
+      title={song.title}
+      name={song.name}
+      index={song.index}
+      image={require(`../../resources/images/${song.image}`).default}
+      id={song.id}
+      handlePlay={song.handlePlay}
+      author={song.author}
+    />
+  ));
+
   return (
     <>
       <Wrapper>
         <Header>
           <Content>
-            <Img img={img} />
+            <Img img={require("../../resources/images/like.png").default} />
             <Info>
-              <Title>Playlist Name</Title>
+              <Title>Liked Songs</Title>
               <Author>Example Name</Author>
             </Info>
           </Content>
         </Header>
         <Songs>
           <Panel>
-            <Play>
+            <Play onClick={() => handlePlayPlaylist(likedSongs)}>
               <i className="fas fa-play"></i>
             </Play>
             <Remove>Remove</Remove>
@@ -49,19 +67,7 @@ const ShowPlaylist = () => {
                   <i className="far fa-clock"></i>
                 </TableHeader>
               </FirstRow>
-              <Row />
-              <Row />
-              <Row />
-              <Row />
-              <Row />
-              <Row />
-              <Row />
-              <Row />
-              <Row />
-              <Row />
-              <Row />
-              <Row />
-              <Row />
+              {rows}
             </tbody>
           </Table>
         </Songs>
