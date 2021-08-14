@@ -31,7 +31,7 @@ const Library = () => {
       <Wrapper>
         <PageTitle>Playlists</PageTitle>
         <Content>
-          <LikedSongs to="/player/playlist">
+          <LikedSongs to="/player/playlist/liked">
             <Box>
               <Title>Liked Songs</Title>
               <Number>{likedSongs.length} liked songs</Number>
