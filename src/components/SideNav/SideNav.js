@@ -12,7 +12,7 @@ import {
   StyledLink,
 } from "./SideNav.style";
 
-const SideNav = ({ active, setActive }) => {
+const SideNav = ({ active, setActive, setPopup }) => {
   return (
     <>
       <Wrapper active={active}>
@@ -20,27 +20,46 @@ const SideNav = ({ active, setActive }) => {
           <Logo img={img} />
           <Container>
             <Element>
-              <StyledLink to="/player">Home</StyledLink>
+              <StyledLink to="/player" onClick={() => setActive(false)}>
+                Home
+              </StyledLink>
             </Element>
             <Element>
-              <StyledLink to="search">Search</StyledLink>
+              <StyledLink to="search" onClick={() => setActive(false)}>
+                Search
+              </StyledLink>
             </Element>
             <Element>
-              <StyledLink to="library">Library</StyledLink>
+              <StyledLink to="library" onClick={() => setActive(false)}>
+                Library
+              </StyledLink>
             </Element>
           </Container>
           <Container>
-            <Element>Create Playlist</Element>
+            <Element
+              onClick={() => {
+                setPopup(true);
+                setActive(false);
+              }}
+            >
+              Create Playlist
+            </Element>
             <Element>
-              <StyledLink to="playlist">Liked Songs</StyledLink>
+              <StyledLink to="playlist" onClick={() => setActive(false)}>
+                Liked Songs
+              </StyledLink>
             </Element>
           </Container>
           <Playlists>
             <Playlist>
-              <StyledLink to="playlist">My Playlist</StyledLink>
+              <StyledLink to="playlist" onClick={() => setActive(false)}>
+                My Playlist
+              </StyledLink>
             </Playlist>
             <Playlist>
-              <StyledLink to="playlist">My Playlist</StyledLink>
+              <StyledLink to="playlist" onClick={() => setActive(false)}>
+                My Playlist
+              </StyledLink>
             </Playlist>
           </Playlists>
         </Content>

@@ -6,9 +6,11 @@ import { SongsProvider } from "../../Context/songsContext";
 import SideNav from "../SideNav/SideNav";
 import Player from "../Player/Player";
 import Profil from "../Profil/Profil";
+import Popup from "../Popup/Popup";
 
 const MusicPlayer = () => {
   const [active, setActive] = useState(false);
+  const [popup, setPopup] = useState(false);
   const [avatar, setAvatar] = useState("");
   const [songs, setSongs] = useState([]);
   const [songsFromPlaylist, setSongsFromPlaylist] = useState([]);
@@ -99,7 +101,8 @@ const MusicPlayer = () => {
   return (
     <>
       {verify()}
-      <SideNav active={active} setActive={setActive} />
+      {popup && <Popup setPopup={setPopup} />}
+      <SideNav active={active} setActive={setActive} setPopup={setPopup} />
       <Profil avatar={avatar} />
       <SongsProvider
         value={{ songs, likedSongs, handlePlayPlaylist, songsFromPlaylist }}

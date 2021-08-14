@@ -28,7 +28,6 @@ app.post("/get-username", async (req, res) => {
 
   try {
     const user = jwt.verify(token, JWT_SECRET);
-    console.log(user);
 
     res.json(user.username);
   } catch (error) {
