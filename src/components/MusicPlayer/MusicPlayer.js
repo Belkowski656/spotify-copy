@@ -13,6 +13,7 @@ const MusicPlayer = () => {
   const [popup, setPopup] = useState(false);
   const [avatar, setAvatar] = useState("");
   const [songs, setSongs] = useState([]);
+  const [allSongs, setAllSongs] = useState([]);
   const [songsFromPlaylist, setSongsFromPlaylist] = useState([]);
   const [songIndex, setSongIndex] = useState(0);
   const [play, setPlay] = useState(false);
@@ -70,6 +71,7 @@ const MusicPlayer = () => {
         });
 
         setSongs(songsArr);
+        setAllSongs(songsArr);
       });
   };
 
@@ -96,8 +98,10 @@ const MusicPlayer = () => {
     setLikedSongs(likedSongsArr);
   };
 
-  const handlePlayPlaylist = (songs) => {
+  const handlePlayPlaylist = (songs, index) => {
+    console.log(songs);
     setSongsFromPlaylist(songs);
+    setSongIndex(index);
   };
 
   const getPlaylists = async () => {
@@ -130,6 +134,7 @@ const MusicPlayer = () => {
           handlePlayPlaylist,
           songsFromPlaylist,
           playlists,
+          allSongs,
         }}
       >
         <Player index={songIndex} play={play} setPlay={setPlay} />

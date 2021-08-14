@@ -6,9 +6,8 @@ const Row = ({
   image,
   title,
   author,
-  name,
+  songs,
   rowIndex,
-  index,
   handlePlay,
   duration,
 }) => {
@@ -26,9 +25,12 @@ const Row = ({
     <Wrapper onMouseEnter={handleHover} onMouseLeave={handleLeave}>
       <Number>
         {active ? (
-          <i className="fas fa-play" onClick={() => handlePlay(index)}></i>
+          <i
+            className="fas fa-play"
+            onClick={() => handlePlay(songs, rowIndex)}
+          ></i>
         ) : (
-          rowIndex
+          rowIndex + 1
         )}
       </Number>
       <Title>

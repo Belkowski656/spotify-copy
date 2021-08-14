@@ -25,22 +25,26 @@ const ShowPlaylist = () => {
   let { playlistId } = useParams();
 
   const [username, setUsername] = useState("");
+  const [songs, setSongs] = useState([]);
+  const [playlist, setPlaylist] = useState([]);
 
   const likedSongs = useContext(SongsContext).likedSongs;
+  const playlists = useContext(SongsContext).playlists;
+  const allSongs = useContext(SongsContext).allSongs;
   const handlePlayPlaylist = useContext(SongsContext).handlePlayPlaylist;
 
-  const rows = likedSongs.map((song, i) => (
+  const rows = songs.map((song, i) => (
     <Row
       key={i}
-      rowIndex={i + 1}
+      rowIndex={i}
       title={song.title}
       name={song.name}
-      index={song.index}
       image={require(`../../resources/images/${song.image}`).default}
       id={song.id}
-      handlePlay={song.handlePlay}
+      handlePlay={handlePlayPlaylist}
       author={song.author}
       duration={song.duration}
+      songs={songs}
     />
   ));
 
@@ -57,25 +61,54 @@ const ShowPlaylist = () => {
   };
 
   useEffect(getUsername);
-  console.log(playlistId);
+  useEffect(() => {
+    console.log("jestem");
+    if (playlistId === "liked") setSongs(likedSongs);
+    else {
+      const playlist = playlists.filter(
+        (playlist) => playlist._id === playlistId
+      );
+
+      if (playlist !== undefined && playlists.songs.length !== 0) {
+        const songsArr = allSongs.filter((song) => {
+          for (let i = 0; i < playlist.songs.length; i++) {
+            if (song.id === playlist.songs[i]) return allSongs[i];
+          }
+          return null;
+        });
+
+        setPlaylist(playlist[0]);
+        setSongs(songsArr);
+      }
+    }
+  }, [playlistId, likedSongs, playlists]);
+
   return (
     <>
       <Wrapper>
         <Header>
           <Content>
-            <Img img={require("../../resources/images/like.png").default} />
+            <Img
+              img={
+                playlistId === "liked"
+                  ? require("../../resources/images/like.png").default
+                  : require("../../resources/images/playlist.png").default
+              }
+            />
             <Info>
-              <Title>Liked Songs</Title>
+              <Title>
+                {playlist !== undefined ? playlist.playlistName : "Liked Songs"}
+              </Title>
               <Author>{username}</Author>
             </Info>
           </Content>
         </Header>
         <Songs>
           <Panel>
-            <Play onClick={() => handlePlayPlaylist(likedSongs)}>
+            <Play onClick={() => handlePlayPlaylist(likedSongs, 0)}>
               <i className="fas fa-play"></i>
             </Play>
-            <Remove>Remove</Remove>
+            {playlistId === "liked" ? null : <Remove>Remove</Remove>}
           </Panel>
           <Table cellSpacing="0">
             <tbody>
