@@ -12,7 +12,18 @@ import {
   StyledLink,
 } from "./SideNav.style";
 
-const SideNav = ({ active, setActive, setPopup }) => {
+const SideNav = ({ active, setActive, setPopup, playlists }) => {
+  const playlistsArr = playlists.map((playlist, i) => (
+    <Playlist key={i}>
+      <StyledLink
+        to={`playlist/${playlist._id}`}
+        onClick={() => setActive(false)}
+      >
+        {playlist.playlistName}
+      </StyledLink>
+    </Playlist>
+  ));
+
   return (
     <>
       <Wrapper active={active}>
@@ -45,23 +56,12 @@ const SideNav = ({ active, setActive, setPopup }) => {
               Create Playlist
             </Element>
             <Element>
-              <StyledLink to="playlist" onClick={() => setActive(false)}>
+              <StyledLink to="playlist/liked" onClick={() => setActive(false)}>
                 Liked Songs
               </StyledLink>
             </Element>
           </Container>
-          <Playlists>
-            <Playlist>
-              <StyledLink to="playlist" onClick={() => setActive(false)}>
-                My Playlist
-              </StyledLink>
-            </Playlist>
-            <Playlist>
-              <StyledLink to="playlist" onClick={() => setActive(false)}>
-                My Playlist
-              </StyledLink>
-            </Playlist>
-          </Playlists>
+          <Playlists>{playlistsArr}</Playlists>
         </Content>
         <Arrow active={active} onClick={() => setActive((prev) => !prev)}>
           <i className="fas fa-sort-up"></i>

@@ -59,3 +59,9 @@ export const Button = styled(Link)`
   padding: 5px 0;
   margin-right: 5px;
 `;
+
+export const Error = styled.p`
+  font-size: 16px;
+  color: red;
+  margin-top: 10px;
+`;

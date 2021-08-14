@@ -2,14 +2,14 @@ import { Wrapper, Img, Info, Title, Author } from "./Playlist.style";
 
 import img from "../../resources/images/image.jpg";
 
-const Playlist = () => {
+const Playlist = ({ id, playlistName, username, image }) => {
   return (
     <>
-      <Wrapper>
-        <Img img={img} />
+      <Wrapper to={`/player/playlist/${id}`}>
+        <Img img={image} />
         <Info>
-          <Title>My Playlist #1</Title>
-          <Author>By Example Name</Author>
+          <Title>{playlistName}</Title>
+          <Author>{username}</Author>
         </Info>
       </Wrapper>
     </>

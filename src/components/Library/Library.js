@@ -15,6 +15,17 @@ import Playlist from "../Playlist/Playlist";
 
 const Library = () => {
   const likedSongs = useContext(SongsContext).likedSongs;
+  const playlists = useContext(SongsContext).playlists;
+
+  const playlistsArr = playlists.map((playlist, i) => (
+    <Playlist
+      key={i}
+      playlistName={playlist.playlistName}
+      id={playlist._id}
+      username={playlist.ownerUsername}
+      image={require(`../../resources/images/${playlist.image}`).default}
+    />
+  ));
   return (
     <>
       <Wrapper>
@@ -26,16 +37,7 @@ const Library = () => {
               <Number>{likedSongs.length} liked songs</Number>
             </Box>
           </LikedSongs>
-          <Playlist />
-          <Playlist />
-          <Playlist />
-          <Playlist />
-          <Playlist />
-          <Playlist />
-          <Playlist />
-          <Playlist />
-          <Playlist />
-          <Playlist />
+          {playlistsArr}
         </Content>
       </Wrapper>
     </>

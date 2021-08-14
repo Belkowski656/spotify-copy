@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(Link)`
   position: relative;
   padding: 15px;
   background-color: rgb(35, 35, 35);
@@ -9,6 +10,8 @@ export const Wrapper = styled.div`
   cursor: pointer;
   margin-top: 30px;
   text-align: center;
+  text-decoration: none;
+  color: white;
 
   :hover {
     background-color: rgb(45, 45, 45);

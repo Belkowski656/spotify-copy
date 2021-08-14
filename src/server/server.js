@@ -9,6 +9,7 @@ const uuid = require("uuid").v4;
 const User = require("./models/user");
 const Music = require("./models/Music");
 const Liked = require("./models/liked");
+const Playlist = require("./models/playlist");
 
 const JWT_SECRET = "fanjasdfnjdsfin75454584858#@$@$!%dnfjdnf92ldsmkbfhud09";
 
@@ -22,6 +23,41 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
+
+app.post("/get-playlists", async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const ownerId = user.id;
+
+    const playlists = await Playlist.find({ ownerId }).lean();
+    console.log(playlists);
+    res.json(playlists);
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
+
+app.post("/create-playlist", async (req, res) => {
+  const { token, playlistName } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const ownerId = user.id;
+    const ownerUsername = user.username;
+
+    await Playlist.create({
+      ownerId,
+      ownerUsername,
+      playlistName,
+    });
+
+    res.json({ status: "ok" });
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
 
 app.post("/get-username", async (req, res) => {
   const { token } = req.body;

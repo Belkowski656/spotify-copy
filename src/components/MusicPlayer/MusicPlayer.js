@@ -17,6 +17,7 @@ const MusicPlayer = () => {
   const [songIndex, setSongIndex] = useState(0);
   const [play, setPlay] = useState(false);
   const [likedSongs, setLikedSongs] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
 
   const getToken = async () => {
     const result = await fetch("/player", {
@@ -38,6 +39,7 @@ const MusicPlayer = () => {
     verify();
     getToken();
     getSongs();
+    getPlaylists();
   }, []);
 
   const verify = () => {
@@ -97,15 +99,38 @@ const MusicPlayer = () => {
   const handlePlayPlaylist = (songs) => {
     setSongsFromPlaylist(songs);
   };
-  console.log(songs);
+
+  const getPlaylists = async () => {
+    const result = await fetch("/get-playlists", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: sessionStorage.getItem("token"),
+      }),
+    }).then((res) => res.json());
+
+    setPlaylists(result);
+  };
+
   return (
     <>
       {verify()}
       {popup && <Popup setPopup={setPopup} />}
-      <SideNav active={active} setActive={setActive} setPopup={setPopup} />
+      <SideNav
+        active={active}
+        setActive={setActive}
+        setPopup={setPopup}
+        playlists={playlists}
+      />
       <Profil avatar={avatar} />
       <SongsProvider
-        value={{ songs, likedSongs, handlePlayPlaylist, songsFromPlaylist }}
+        value={{
+          songs,
+          likedSongs,
+          handlePlayPlaylist,
+          songsFromPlaylist,
+          playlists,
+        }}
       >
         <Player index={songIndex} play={play} setPlay={setPlay} />
         <Outlet />

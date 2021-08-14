@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import SongsContext from "../../Context/songsContext";
+import { useParams } from "react-router";
 
 import Row from "../Row/Row";
 
@@ -21,6 +22,8 @@ import {
 } from "./ShowPlaylist.style";
 
 const ShowPlaylist = () => {
+  let { playlistId } = useParams();
+
   const [username, setUsername] = useState("");
 
   const likedSongs = useContext(SongsContext).likedSongs;
@@ -54,7 +57,7 @@ const ShowPlaylist = () => {
   };
 
   useEffect(getUsername);
-
+  console.log(playlistId);
   return (
     <>
       <Wrapper>
