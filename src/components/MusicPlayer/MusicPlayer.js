@@ -75,10 +75,6 @@ const MusicPlayer = () => {
       });
   };
 
-  useEffect(() => {
-    fetchLikedSongs();
-  }, [songs]);
-
   const fetchLikedSongs = async () => {
     const results = await fetch("/fetch-liked-songs", {
       method: "POST",
@@ -97,6 +93,8 @@ const MusicPlayer = () => {
 
     setLikedSongs(likedSongsArr);
   };
+
+  useEffect(fetchLikedSongs);
 
   const handlePlayPlaylist = (songs, index) => {
     setSongsFromPlaylist(songs);
