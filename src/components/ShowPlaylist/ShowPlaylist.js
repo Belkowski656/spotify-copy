@@ -26,7 +26,7 @@ const ShowPlaylist = () => {
 
   const [username, setUsername] = useState("");
   const [songs, setSongs] = useState([]);
-  const [playlist, setPlaylist] = useState([]);
+  const [name, setName] = useState("");
 
   const likedSongs = useContext(SongsContext).likedSongs;
   const playlists = useContext(SongsContext).playlists;
@@ -62,26 +62,35 @@ const ShowPlaylist = () => {
 
   useEffect(getUsername);
   useEffect(() => {
-    console.log("jestem");
     if (playlistId === "liked") setSongs(likedSongs);
     else {
-      const playlist = playlists.filter(
-        (playlist) => playlist._id === playlistId
-      );
+      if (playlists.length) {
+        const playlist = playlists.filter(
+          (playlist) => playlist._id === playlistId
+        );
 
-      if (playlist !== undefined && playlists.songs.length !== 0) {
-        const songsArr = allSongs.filter((song) => {
-          for (let i = 0; i < playlist.songs.length; i++) {
-            if (song.id === playlist.songs[i]) return allSongs[i];
-          }
-          return null;
-        });
+        setName(playlist[0].playlistName);
 
-        setPlaylist(playlist[0]);
-        setSongs(songsArr);
+        const playlistSongs = playlist[0].songs;
+
+        if (playlistSongs !== undefined) {
+          const songsArr = allSongs.filter((song) => {
+            for (let i = 0; i < playlistSongs.length; i++) {
+              if (song.id === playlistSongs[i]) return allSongs[i];
+            }
+            return null;
+          });
+          setSongs(songsArr);
+        } else {
+          console.log("empty");
+        }
+
+        // console.log(songsArr);
+        // console.log(songsArr);
+        // setPlaylist(playlist);
       }
     }
-  }, [playlistId, likedSongs, playlists]);
+  }, [likedSongs, playlistId, playlists, allSongs]);
 
   return (
     <>
@@ -96,16 +105,14 @@ const ShowPlaylist = () => {
               }
             />
             <Info>
-              <Title>
-                {playlist !== undefined ? playlist.playlistName : "Liked Songs"}
-              </Title>
+              <Title>{playlistId === "liked" ? "Liked Songs" : name}</Title>
               <Author>{username}</Author>
             </Info>
           </Content>
         </Header>
         <Songs>
           <Panel>
-            <Play onClick={() => handlePlayPlaylist(likedSongs, 0)}>
+            <Play onClick={() => handlePlayPlaylist(songs, 0)}>
               <i className="fas fa-play"></i>
             </Play>
             {playlistId === "liked" ? null : <Remove>Remove</Remove>}
