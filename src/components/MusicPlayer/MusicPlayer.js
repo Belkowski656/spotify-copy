@@ -99,7 +99,6 @@ const MusicPlayer = () => {
   };
 
   const handlePlayPlaylist = (songs, index) => {
-    console.log(songs);
     setSongsFromPlaylist(songs);
     setSongIndex(index);
   };

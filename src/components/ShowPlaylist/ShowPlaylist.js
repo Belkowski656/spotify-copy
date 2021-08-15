@@ -84,10 +84,6 @@ const ShowPlaylist = () => {
         } else {
           console.log("empty");
         }
-
-        // console.log(songsArr);
-        // console.log(songsArr);
-        // setPlaylist(playlist);
       }
     }
   }, [likedSongs, playlistId, playlists, allSongs]);
