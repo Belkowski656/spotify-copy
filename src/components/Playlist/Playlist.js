@@ -1,7 +1,5 @@
 import { Wrapper, Img, Info, Title, Author } from "./Playlist.style";
 
-import img from "../../resources/images/image.jpg";
-
 const Playlist = ({ id, playlistName, username, image }) => {
   return (
     <>

@@ -28,6 +28,21 @@ const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
+app.post("/delete-playlist", async (req, res) => {
+  const { token, id } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const ownerId = user.id;
+
+    await Playlist.deleteOne({ _id: id, ownerId });
+
+    res.json({ status: "ok" });
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
+
 app.post("/add-song-to-playlist", async (req, res) => {
   const { token, id, playlistId } = req.body;
 

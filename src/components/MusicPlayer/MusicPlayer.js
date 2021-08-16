@@ -88,9 +88,9 @@ const MusicPlayer = () => {
   }, []);
 
   const handleAdd = useCallback(
-    (id) => {
+    async (id) => {
       if (playlists.length === 1) {
-        const result = fetch("/add-song-to-playlist", {
+        const result = await fetch("/add-song-to-playlist", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -99,8 +99,11 @@ const MusicPlayer = () => {
           }),
         }).then((res) => res.json());
 
-        if (result.status === "ok") getPlaylists();
+        if (result.status === "ok") {
+          getPlaylists();
+        }
       } else {
+        getPlaylists();
         setAddSongId(id);
         setPlaylistPopup(true);
       }
@@ -131,6 +134,21 @@ const MusicPlayer = () => {
       });
   }, [handleAdd]);
 
+  const removePlaylist = async (id) => {
+    const result = await fetch("/delete-playlist", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: sessionStorage.getItem("token"),
+        id,
+      }),
+    }).then((res) => res.json());
+
+    if (result.status === "ok") {
+      document.location.href = "/player";
+    }
+  };
+
   useEffect(() => {
     verify();
   });
@@ -150,7 +168,7 @@ const MusicPlayer = () => {
   return (
     <>
       {verify()}
-      {popup && <Popup setPopup={setPopup} />}
+      {popup && <Popup setPopup={setPopup} getPlaylists={getPlaylists} />}
       {playlistPopup && (
         <PlaylistPopup
           setPlaylistPopup={setPlaylistPopup}
@@ -174,6 +192,7 @@ const MusicPlayer = () => {
           songsFromPlaylist,
           playlists,
           allSongs,
+          removePlaylist,
         }}
       >
         <Player

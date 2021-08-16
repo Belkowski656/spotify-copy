@@ -32,6 +32,7 @@ const ShowPlaylist = () => {
   const playlists = useContext(SongsContext).playlists;
   const allSongs = useContext(SongsContext).allSongs;
   const handlePlayPlaylist = useContext(SongsContext).handlePlayPlaylist;
+  const removePlaylist = useContext(SongsContext).removePlaylist;
 
   const rows = songs.map((song, i) => (
     <Row
@@ -111,7 +112,9 @@ const ShowPlaylist = () => {
             <Play onClick={() => handlePlayPlaylist(songs, 0)}>
               <i className="fas fa-play"></i>
             </Play>
-            {playlistId === "liked" ? null : <Remove>Remove</Remove>}
+            {playlistId === "liked" ? null : (
+              <Remove onClick={() => removePlaylist(playlistId)}>Remove</Remove>
+            )}
           </Panel>
           <Table cellSpacing="0">
             <tbody>

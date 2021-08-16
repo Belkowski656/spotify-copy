@@ -10,7 +10,7 @@ import {
   Error,
 } from "./Popup.style";
 
-const Popup = ({ setPopup }) => {
+const Popup = ({ setPopup, getPlaylists }) => {
   const [playlistName, setPlaylistName] = useState("");
   const [errors, setErrors] = useState("");
 
@@ -33,6 +33,7 @@ const Popup = ({ setPopup }) => {
     if (result.status === "ok") {
       setPlaylistName("");
       setPopup(false);
+      getPlaylists();
     }
   };
 
@@ -48,7 +49,7 @@ const Popup = ({ setPopup }) => {
               onChange={(e) => setPlaylistName(e.target.value)}
             />
             {errors.length ? <Error>{errors}</Error> : null}
-            <Button to="playlist" onClick={createPlaylist}>
+            <Button to="library" onClick={createPlaylist}>
               Create
             </Button>
             <Close onClick={() => setPopup(false)}>Close</Close>
