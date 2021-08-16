@@ -1,6 +1,14 @@
 import { Wrapper, Image, Info, Title, Name, Play, Add } from "./MusicBox.style";
 
-const MusicBox = ({ id, name, title, image, author, handlePlay, index }) => {
+const MusicBox = ({
+  id,
+  title,
+  image,
+  author,
+  handlePlay,
+  handleAdd,
+  index,
+}) => {
   return (
     <>
       <Wrapper>
@@ -12,7 +20,7 @@ const MusicBox = ({ id, name, title, image, author, handlePlay, index }) => {
         <Play onClick={() => handlePlay(index)}>
           <i className="fas fa-play"></i>
         </Play>
-        <Add>
+        <Add onClick={() => handleAdd(id)}>
           <i className="fas fa-plus"></i>
         </Add>
       </Wrapper>

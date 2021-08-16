@@ -13,16 +13,48 @@ const Playlist = require("./models/playlist");
 
 const JWT_SECRET = "fanjasdfnjdsfin75454584858#@$@$!%dnfjdnf92ldsmkbfhud09";
 
-mongoose.connect("mongodb://localhost:27017/spotify-copy-db", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-});
+try {
+  mongoose.connect("mongodb://localhost:27017/spotify-copy-db", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  });
+} catch (err) {
+  console.log(err);
+}
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
+
+app.post("/add-song-to-playlist", async (req, res) => {
+  const { token, id, playlistId } = req.body;
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const ownerId = user.id;
+    if (playlistId === undefined) {
+      await Playlist.updateOne(
+        { ownerId },
+        {
+          $push: { songs: id },
+        }
+      );
+    } else {
+      await Playlist.updateOne(
+        { _id: playlistId, ownerId },
+        {
+          $push: { songs: id },
+        }
+      );
+    }
+
+    res.json({ status: "ok" });
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
 
 app.post("/get-playlists", async (req, res) => {
   const { token } = req.body;
@@ -32,7 +64,7 @@ app.post("/get-playlists", async (req, res) => {
     const ownerId = user.id;
 
     const playlists = await Playlist.find({ ownerId }).lean();
-    console.log(playlists);
+
     res.json(playlists);
   } catch (error) {
     res.json({ status: "error", error: error });
@@ -129,7 +161,6 @@ app.post("/add-song-to-liked", async (req, res) => {
 
     const liked = await Liked.findOne({ ownerId }).lean();
     if (liked === null) {
-      console.log("create");
       await Liked.create({
         ownerId,
         songs: songId,
@@ -157,7 +188,6 @@ app.get("/songs", async (req, res) => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log(req.body);
     cb(null, "./src/resources/images/avatars");
   },
   filename: (req, file, cb) => {
@@ -270,26 +300,29 @@ app.post("/player", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  try {
+    const user = await User.findOne({ username }).lean();
 
-  const user = await User.findOne({ username }).lean();
+    if (!user) {
+      return res.json({
+        status: "error",
+        error: "Invalid username or password.",
+      });
+    }
 
-  if (!user) {
-    return res.json({
-      status: "error",
-      error: "Invalid username or password.",
-    });
+    if (await bcrypt.compare(password, user.password)) {
+      const token = jwt.sign(
+        { id: user._id, username: user.username },
+        JWT_SECRET
+      );
+
+      return res.json({ status: "ok", data: token });
+    }
+
+    res.json({ status: "error", error: "Invalid username or password." });
+  } catch (err) {
+    res.json({ status: "error", error: `${err}` });
   }
-
-  if (await bcrypt.compare(password, user.password)) {
-    const token = jwt.sign(
-      { id: user._id, username: user.username },
-      JWT_SECRET
-    );
-
-    return res.json({ status: "ok", data: token });
-  }
-
-  res.json({ status: "error", error: "Invalid username or password." });
 });
 
 app.post("/register", async (req, res) => {

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import SongsContext from "../../Context/songsContext";
 import { useParams } from "react-router";
 
@@ -48,7 +48,7 @@ const ShowPlaylist = () => {
     />
   ));
 
-  const getUsername = async () => {
+  const getUsername = useCallback(async () => {
     const result = await fetch("/get-username", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -58,9 +58,9 @@ const ShowPlaylist = () => {
     }).then((res) => res.json());
 
     setUsername(result);
-  };
+  }, []);
 
-  useEffect(getUsername);
+  useEffect(getUsername, [getUsername]);
   useEffect(() => {
     if (playlistId === "liked") setSongs(likedSongs);
     else {

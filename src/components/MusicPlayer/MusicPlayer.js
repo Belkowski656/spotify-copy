@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { SongsProvider } from "../../Context/songsContext";
@@ -7,10 +7,12 @@ import SideNav from "../SideNav/SideNav";
 import Player from "../Player/Player";
 import Profil from "../Profil/Profil";
 import Popup from "../Popup/Popup";
+import PlaylistPopup from "../PlaylistPopup/PlaylistPopup";
 
 const MusicPlayer = () => {
   const [active, setActive] = useState(false);
   const [popup, setPopup] = useState(false);
+  const [playlistPopup, setPlaylistPopup] = useState(false);
   const [avatar, setAvatar] = useState("");
   const [songs, setSongs] = useState([]);
   const [allSongs, setAllSongs] = useState([]);
@@ -19,8 +21,9 @@ const MusicPlayer = () => {
   const [play, setPlay] = useState(false);
   const [likedSongs, setLikedSongs] = useState([]);
   const [playlists, setPlaylists] = useState([]);
+  const [addSongId, setAddSongId] = useState("");
 
-  const getToken = async () => {
+  const getToken = useCallback(async () => {
     const result = await fetch("/player", {
       method: "POST",
       headers: {
@@ -34,13 +37,6 @@ const MusicPlayer = () => {
     setAvatar(
       require(`../../resources/images/avatars/${result.avatar}`).default
     );
-  };
-
-  useEffect(() => {
-    verify();
-    getToken();
-    getSongs();
-    getPlaylists();
   }, []);
 
   const verify = () => {
@@ -53,29 +49,7 @@ const MusicPlayer = () => {
     setPlay(true);
   };
 
-  const getSongs = async () => {
-    fetch("/songs")
-      .then((res) => res.json())
-      .then((data) => {
-        const songsArr = data.map((song, index) => {
-          return {
-            id: song._id,
-            name: song.name,
-            title: song.title,
-            author: song.author,
-            image: song.image,
-            handlePlay: handlePlay,
-            index,
-            duration: song.duration,
-          };
-        });
-
-        setSongs(songsArr);
-        setAllSongs(songsArr);
-      });
-  };
-
-  const fetchLikedSongs = async () => {
+  const fetchLikedSongs = useCallback(async () => {
     const results = await fetch("/fetch-liked-songs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -92,16 +66,16 @@ const MusicPlayer = () => {
     });
 
     setLikedSongs(likedSongsArr);
-  };
+  }, [songs]);
 
-  useEffect(fetchLikedSongs);
+  useEffect(() => fetchLikedSongs(), [songs, fetchLikedSongs]);
 
   const handlePlayPlaylist = (songs, index) => {
     setSongsFromPlaylist(songs);
     setSongIndex(index);
   };
 
-  const getPlaylists = async () => {
+  const getPlaylists = useCallback(async () => {
     const result = await fetch("/get-playlists", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -111,12 +85,80 @@ const MusicPlayer = () => {
     }).then((res) => res.json());
 
     setPlaylists(result);
-  };
+  }, []);
+
+  const handleAdd = useCallback(
+    (id) => {
+      if (playlists.length === 1) {
+        const result = fetch("/add-song-to-playlist", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: sessionStorage.getItem("token"),
+            id,
+          }),
+        }).then((res) => res.json());
+
+        if (result.status === "ok") getPlaylists();
+      } else {
+        setAddSongId(id);
+        setPlaylistPopup(true);
+      }
+    },
+    [playlists, getPlaylists]
+  );
+
+  const getSongs = useCallback(async () => {
+    fetch("/songs")
+      .then((res) => res.json())
+      .then((data) => {
+        const songsArr = data.map((song, index) => {
+          return {
+            id: song._id,
+            name: song.name,
+            title: song.title,
+            author: song.author,
+            image: song.image,
+            handlePlay: handlePlay,
+            handleAdd: handleAdd,
+            index,
+            duration: song.duration,
+          };
+        });
+
+        setSongs(songsArr);
+        setAllSongs(songsArr);
+      });
+  }, [handleAdd]);
+
+  useEffect(() => {
+    verify();
+  });
+
+  useEffect(() => {
+    getToken();
+  }, [getToken]);
+
+  useEffect(() => {
+    getSongs();
+  }, [getSongs]);
+
+  useEffect(() => {
+    getPlaylists();
+  }, [getPlaylists]);
 
   return (
     <>
       {verify()}
       {popup && <Popup setPopup={setPopup} />}
+      {playlistPopup && (
+        <PlaylistPopup
+          setPlaylistPopup={setPlaylistPopup}
+          playlists={playlists}
+          addSongId={addSongId}
+          getPlaylists={getPlaylists}
+        />
+      )}
       <SideNav
         active={active}
         setActive={setActive}
