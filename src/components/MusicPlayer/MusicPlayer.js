@@ -176,7 +176,12 @@ const MusicPlayer = () => {
           allSongs,
         }}
       >
-        <Player index={songIndex} play={play} setPlay={setPlay} />
+        <Player
+          index={songIndex}
+          play={play}
+          setPlay={setPlay}
+          fetchLikedSongs={fetchLikedSongs}
+        />
         <Outlet />
       </SongsProvider>
     </>

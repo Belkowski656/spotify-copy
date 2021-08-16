@@ -35,6 +35,7 @@ const Search = () => {
         author={song.author}
         handlePlay={song.handlePlay}
         index={song.index}
+        handleAdd={song.handleAdd}
       />
     );
   });

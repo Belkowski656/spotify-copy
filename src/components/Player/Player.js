@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import SongsContext from "../../Context/songsContext";
 import ReactAudioPlayer from "react-audio-player";
 
@@ -23,7 +23,7 @@ import {
   Content,
 } from "./Player.style";
 
-const Player = ({ index, play, setPlay }) => {
+const Player = ({ index, play, setPlay, fetchLikedSongs }) => {
   const [like, setLike] = useState(false);
 
   const [audioDuration, setAudioDuration] = useState(`0:00`);
@@ -46,7 +46,7 @@ const Player = ({ index, play, setPlay }) => {
     setPlay((prev) => !prev);
   };
 
-  const isSongLiked = async () => {
+  const isSongLiked = useCallback(async () => {
     if (!songsFromPlaylist.length) {
       const result = await fetch("/is-song-liked", {
         method: "post",
@@ -72,7 +72,7 @@ const Player = ({ index, play, setPlay }) => {
       setLike(result.liked);
       return result.liked;
     }
-  };
+  }, [songs, songIndex, songsFromPlaylist]);
 
   useEffect(() => {
     const audio = document.querySelector("#player");
@@ -117,7 +117,7 @@ const Player = ({ index, play, setPlay }) => {
         isSongLiked();
       }
     }
-  }, [songIndex, songs, songsFromPlaylist]);
+  }, [songIndex, songs, songsFromPlaylist, isSongLiked]);
 
   useEffect(() => {
     setSongIndex(index);
@@ -191,6 +191,7 @@ const Player = ({ index, play, setPlay }) => {
 
       if (result.status === "ok") {
         isSongLiked();
+        fetchLikedSongs();
       }
     } else {
       const songId = songs[songIndex].id;
@@ -206,6 +207,7 @@ const Player = ({ index, play, setPlay }) => {
 
       if (result.status === "ok") {
         isSongLiked();
+        fetchLikedSongs();
       }
     }
   };
