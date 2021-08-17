@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const uuid = require("uuid").v4;
+const path = require("path");
 
 const User = require("./models/user");
 const Music = require("./models/Music");
@@ -27,6 +28,14 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("build"));
+
+  app.get("*", (req, res) => {
+    req.sendFile(path.resolve(__dirname, "build", "index.html"));
+  });
+}
 
 app.post("/delete-playlist", async (req, res) => {
   const { token, id } = req.body;
