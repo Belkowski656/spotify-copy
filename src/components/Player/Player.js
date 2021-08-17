@@ -87,9 +87,7 @@ const Player = ({ index, play, setPlay, fetchLikedSongs }) => {
       if (songIndex >= songs.length) return setSongIndex(0);
 
       if (songs.length) {
-        setSong(
-          require(`../../resources/music/${songs[songIndex].name}`).default
-        );
+        setSong(`${songs[songIndex].name}`);
         setSongImage(
           require(`../../resources/images/${songs[songIndex].image}`).default
         );
@@ -103,10 +101,7 @@ const Player = ({ index, play, setPlay, fetchLikedSongs }) => {
       if (songIndex >= songsFromPlaylist.length) return setSongIndex(0);
 
       if (songsFromPlaylist.length) {
-        setSong(
-          require(`../../resources/music/${songsFromPlaylist[songIndex].name}`)
-            .default
-        );
+        setSong(`../../resources/music/${songsFromPlaylist[songIndex].name}`);
         setSongImage(
           require(`../../resources/images/${songsFromPlaylist[songIndex].image}`)
             .default
@@ -229,6 +224,7 @@ const Player = ({ index, play, setPlay, fetchLikedSongs }) => {
           <ReactAudioPlayer
             id={"player"}
             src={song}
+            // src="https://onedrive.live.com/download?cid=3EBDB0631C12303A&resid=3EBDB0631C12303A%21116&authkey=ADQG4Rx_TSNV5vE"
             type="audio/mpeg"
             volume={soundValue / 100}
             onCanPlay={handleOnCanPlay}
