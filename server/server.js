@@ -8,7 +8,7 @@ const uuid = require("uuid").v4;
 const path = require("path");
 
 const User = require("./models/user");
-const Music = require("./models/Music");
+const Music = require("./models/music");
 const Liked = require("./models/liked");
 const Playlist = require("./models/playlist");
 
