@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("build"));
 
-  app.get("*", (req, res) => {
+  app.get("/*", (req, res) => {
     res.sendFile(path.resolve("build", "index.html"));
   });
 }
@@ -221,9 +221,13 @@ app.post("/add-song-to-liked", async (req, res) => {
 });
 
 app.get("/songs", async (req, res) => {
-  const songs = await Music.find({}).lean();
+  try {
+    const songs = await Music.find({}).lean();
 
-  res.json(songs);
+    res.json(songs);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 const storage = multer.diskStorage({
