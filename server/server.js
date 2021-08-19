@@ -15,11 +15,14 @@ const Playlist = require("./models/playlist");
 const JWT_SECRET = "fanjasdfnjdsfin75454584858#@$@$!%dnfjdnf92ldsmkbfhud09";
 
 try {
-  mongoose.connect(process.env.REACT_APP_MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  });
+  mongoose.connect(
+    "mongodb+srv://belkowski:Microphone656!@cluster0.jcnbq.mongodb.net/spotify-copy?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    }
+  );
 } catch (err) {
   console.log(err);
 }
