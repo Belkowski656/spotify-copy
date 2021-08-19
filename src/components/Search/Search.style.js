@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   background-color: rgb(28, 28, 28);
   color: white;
   padding: 20px;
+  min-height: 100vh;
 `;
 
 export const Form = styled.form`
