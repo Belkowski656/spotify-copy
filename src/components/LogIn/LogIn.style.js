@@ -47,12 +47,6 @@ export const Input = styled.input`
   }
 `;
 
-export const LinkPassword = styled.a`
-  display: block;
-  color: #616467;
-  margin: 20px 0;
-`;
-
 export const Submit = styled.button`
   width: 100%;
   border: none;

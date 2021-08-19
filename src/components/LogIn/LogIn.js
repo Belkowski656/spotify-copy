@@ -9,7 +9,6 @@ import {
   Label,
   Text,
   Input,
-  LinkPassword,
   Submit,
   TextBold,
   Button,
@@ -40,7 +39,7 @@ const LogIn = () => {
     e.preventDefault();
 
     if (!login) {
-      return setLoginError("Please enter username or email.");
+      return setLoginError("Please enter username.");
     } else {
       setLoginError("");
     }
@@ -77,11 +76,11 @@ const LogIn = () => {
         <Logo to="/" img={img} />
         <Form onSubmit={handleLogIn}>
           <Label>
-            <Text>Email address or username</Text>
+            <Text>Username</Text>
             <Input
               value={login}
               onChange={handleLoginChange}
-              placeholder="Email address or username"
+              placeholder="Username"
             ></Input>
             {loginError ? <Error>{loginError}</Error> : null}
           </Label>
@@ -96,7 +95,6 @@ const LogIn = () => {
             {passwordError ? <Error>{passwordError}</Error> : null}
           </Label>
           {error ? <Error>{error}</Error> : null}
-          <LinkPassword href="#">Forgot your password?</LinkPassword>
           <Submit>Log in</Submit>
         </Form>
         <TextBold>Don't have an account?</TextBold>
