@@ -15,7 +15,7 @@ const Playlist = require("./models/playlist");
 const JWT_SECRET = "fanjasdfnjdsfin75454584858#@$@$!%dnfjdnf92ldsmkbfhud09";
 
 try {
-  mongoose.connect(process.env.REACT_APP_MONGO_URl, {
+  mongoose.connect(process.env.REACT_APP_MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
