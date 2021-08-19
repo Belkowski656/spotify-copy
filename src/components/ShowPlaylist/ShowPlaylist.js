@@ -33,6 +33,7 @@ const ShowPlaylist = () => {
   const allSongs = useContext(SongsContext).allSongs;
   const handlePlayPlaylist = useContext(SongsContext).handlePlayPlaylist;
   const removePlaylist = useContext(SongsContext).removePlaylist;
+  const handleDelete = useContext(SongsContext).handleDelete;
 
   const rows = songs.map((song, i) => (
     <Row
@@ -46,6 +47,8 @@ const ShowPlaylist = () => {
       author={song.author}
       duration={song.duration}
       songs={songs}
+      playlistId={playlistId}
+      handleDelete={handleDelete}
     />
   ));
 

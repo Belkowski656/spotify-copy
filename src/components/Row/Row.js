@@ -1,6 +1,14 @@
 import { useState } from "react";
 
-import { Wrapper, Number, Title, Author, Duration, Img } from "./Row.style";
+import {
+  Wrapper,
+  Number,
+  Title,
+  Author,
+  Duration,
+  Img,
+  Delete,
+} from "./Row.style";
 
 const Row = ({
   image,
@@ -10,6 +18,9 @@ const Row = ({
   rowIndex,
   handlePlay,
   duration,
+  id,
+  handleDelete,
+  playlistId,
 }) => {
   const [active, setActive] = useState(false);
 
@@ -39,6 +50,9 @@ const Row = ({
       </Title>
       <Author>{author}</Author>
       <Duration>{duration}</Duration>
+      <Delete onClick={() => handleDelete(id, playlistId)}>
+        <i className="far fa-trash-alt"></i>
+      </Delete>
     </Wrapper>
   );
 };

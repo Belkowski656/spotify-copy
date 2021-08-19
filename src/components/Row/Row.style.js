@@ -46,5 +46,9 @@ export const Duration = styled.td`
   font-size: 12px;
   padding: 10px 5px;
   padding-right: 10px;
+`;
+
+export const Delete = styled.td`
+  cursor: pointer;
   border-radius: 0 10px 10px 0;
 `;

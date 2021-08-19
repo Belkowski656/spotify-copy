@@ -149,6 +149,19 @@ const MusicPlayer = () => {
     }
   };
 
+  const handleDelete = async (id, playlistId) => {
+    const result = await fetch("/delete-song-from-playlist", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        songId: id,
+        playlistId,
+      }),
+    }).then((res) => res.json());
+
+    if (result.status === "ok") getPlaylists();
+  };
+
   useEffect(() => {
     verify();
   });
@@ -193,6 +206,7 @@ const MusicPlayer = () => {
           playlists,
           allSongs,
           removePlaylist,
+          handleDelete,
         }}
       >
         <Player

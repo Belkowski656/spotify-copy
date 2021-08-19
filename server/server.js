@@ -37,6 +37,22 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+app.post("/delete-song-from-playlist", async (req, res) => {
+  const { songId, playlistId } = req.body;
+  console.log("xd");
+  try {
+    await Playlist.updateOne(
+      { _id: playlistId },
+      {
+        $pull: { songs: songId },
+      }
+    );
+    res.json({ status: "ok" });
+  } catch (error) {
+    res.json({ status: "error", error: error });
+  }
+});
+
 app.post("/delete-playlist", async (req, res) => {
   const { token, id } = req.body;
 
