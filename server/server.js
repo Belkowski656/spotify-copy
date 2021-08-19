@@ -15,7 +15,7 @@ const Playlist = require("./models/playlist");
 const JWT_SECRET = "fanjasdfnjdsfin75454584858#@$@$!%dnfjdnf92ldsmkbfhud09";
 
 try {
-  mongoose.connect("mongodb://localhost:27017/spotify-copy-db", {
+  mongoose.connect(process.env.REACT_APP_MONGO_URl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
