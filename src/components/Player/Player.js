@@ -76,6 +76,7 @@ const Player = ({ index, play, setPlay, fetchLikedSongs }) => {
 
   useEffect(() => {
     const audio = document.querySelector("#player");
+    audio.crossOrigin = "anonymous";
 
     if (play) audio.play();
     else audio.pause();
