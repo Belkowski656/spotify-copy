@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const uuid = require("uuid").v4;
 const path = require("path");
+const cors = require("cors");
 
 const User = require("./models/user");
 const Music = require("./models/music");
@@ -36,6 +37,16 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve("build", "index.html"));
   });
 }
+
+app.use(
+  cors({
+    allowedHeaders: ["sessionId", "Content-Type"],
+    exposedHeaders: ["sessionId"],
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+  })
+);
 
 app.post("/delete-song-from-playlist", async (req, res) => {
   const { songId, playlistId } = req.body;
