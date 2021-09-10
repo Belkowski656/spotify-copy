@@ -76,7 +76,6 @@ const Player = ({ index, play, setPlay, fetchLikedSongs }) => {
 
   useEffect(() => {
     const audio = document.querySelector("#player");
-    audio.crossOrigin = "anonymous";
 
     if (play) audio.play();
     else audio.pause();
@@ -225,7 +224,6 @@ const Player = ({ index, play, setPlay, fetchLikedSongs }) => {
           <ReactAudioPlayer
             id={"player"}
             src={song}
-            // src="https://onedrive.live.com/download?cid=3EBDB0631C12303A&resid=3EBDB0631C12303A%21116&authkey=ADQG4Rx_TSNV5vE"
             type="audio/mpeg"
             volume={soundValue / 100}
             onCanPlay={handleOnCanPlay}
