@@ -112,7 +112,10 @@ const MusicPlayer = () => {
   );
 
   const getSongs = useCallback(async () => {
-    fetch("/songs")
+    fetch("/songs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => res.json())
       .then((data) => {
         const songsArr = data.map((song, index) => {

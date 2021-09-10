@@ -220,7 +220,7 @@ app.post("/add-song-to-liked", async (req, res) => {
   }
 });
 
-app.get("/songs", async (req, res) => {
+app.post("/songs", async (req, res) => {
   try {
     const songs = await Music.find({}).lean();
 
