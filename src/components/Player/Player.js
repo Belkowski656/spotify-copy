@@ -101,7 +101,7 @@ const Player = ({ index, play, setPlay, fetchLikedSongs }) => {
       if (songIndex >= songsFromPlaylist.length) return setSongIndex(0);
 
       if (songsFromPlaylist.length) {
-        setSong(`../../resources/music/${songsFromPlaylist[songIndex].name}`);
+        setSong(`${songsFromPlaylist[songIndex].name}`);
         setSongImage(
           require(`../../resources/images/${songsFromPlaylist[songIndex].image}`)
             .default
