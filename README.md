@@ -22,6 +22,9 @@ This is a MERN Stack forum application that provides the main functions of spoti
 ## Setup
 It is not possible to run the application locally on your computer.
 
+But you can check app online:
+[Link to application](https://spotify-copy.herokuapp.com/)
+
 ---
 
 ## License
