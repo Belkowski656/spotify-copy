@@ -122,24 +122,24 @@ const Account = () => {
       <Wrapper bgc={bgc}></Wrapper>
       <Box>
         <Title>Account details</Title>
-        <Form action="/upload" method="POST" encType="multipart/form-data">
-          <Img img={image}>
-            <Edit>
+        {/* <Form action="/upload" method="POST" encType="multipart/form-data"> */}
+        <Img img={image}>
+          {/* <Edit>
               <InputFile
                 type="file"
                 name="avatar"
                 accept="image/*"
                 onChange={handleFileChange}
               />
-            </Edit>
-          </Img>
-          <InputToken
-            type="text"
-            defaultValue={sessionStorage.getItem("token")}
-            name="token"
-          />
-          {fileEdit ? <Submit>Save</Submit> : null}
-        </Form>
+            </Edit> */}
+        </Img>
+        {/* <InputToken
+          type="text"
+          defaultValue={sessionStorage.getItem("token")}
+          name="token"
+        />
+        {fileEdit ? <Submit>Save</Submit> : null} */}
+        {/* </Form> */}
         <Content>
           <tbody>
             {userData.length
