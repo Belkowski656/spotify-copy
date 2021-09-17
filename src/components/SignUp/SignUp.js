@@ -31,6 +31,8 @@ import {
 } from "./SignUp.style";
 
 const SignUp = () => {
+  const [duplicate, setDuplicate] = useState("");
+
   const getDate = () => {
     const today = new Date();
 
@@ -119,6 +121,10 @@ const SignUp = () => {
           gender,
         }),
       }).then((res) => res.json());
+
+      if (result.status === "error") {
+        setDuplicate(result.error);
+      }
 
       if (result.status === "ok") {
         document.location.href = "/login";
@@ -211,6 +217,7 @@ const SignUp = () => {
             </LabelCheckBox>
             {errors.checkbox ? <Error>{errors.checkbox.message}</Error> : null}
             <Submit type="submit">Sign Up</Submit>
+            {duplicate ? <Error>{duplicate}</Error> : null}
           </Form>
           <p>
             You already have an account? <LogIn to="/login">Log In</LogIn>.
