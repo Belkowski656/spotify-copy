@@ -258,7 +258,7 @@ const upload = multer({ storage });
 app.post("/upload", upload.single("avatar"), async (req, res) => {
   const image = req.file.filename;
   const token = req.body.token;
-
+  console.log(req.file);
   try {
     const user = jwt.verify(token, JWT_SECRET);
     const _id = user.id;
