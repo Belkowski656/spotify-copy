@@ -243,7 +243,7 @@ app.post("/songs", async (req, res) => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./public/uploads");
+    cb(null, "./src/resources/images/avatars");
   },
   filename: (req, file, cb) => {
     const { originalname } = file;
