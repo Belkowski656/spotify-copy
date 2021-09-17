@@ -68,7 +68,7 @@ const Account = () => {
         { value: gender, name: "Gender" },
       ]);
 
-      setImage(require(`../src/resources/images/avatars/${image}`).default);
+      setImage(require(`../../resources/images/avatars/${image}`).default);
     }
   };
 
