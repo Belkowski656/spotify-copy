@@ -50,9 +50,11 @@ const Row = ({
       </Title>
       <Author>{author}</Author>
       <Duration>{duration}</Duration>
-      <Delete onClick={() => handleDelete(id, playlistId)}>
-        <i className="far fa-trash-alt"></i>
-      </Delete>
+      {playlistId === "liked" ? null : (
+        <Delete onClick={() => handleDelete(id, playlistId)}>
+          <i className="far fa-trash-alt"></i>
+        </Delete>
+      )}
     </Wrapper>
   );
 };
