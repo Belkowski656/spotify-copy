@@ -216,8 +216,8 @@ const SignUp = () => {
               <TextNormal>I accept the terms and conditions.</TextNormal>
             </LabelCheckBox>
             {errors.checkbox ? <Error>{errors.checkbox.message}</Error> : null}
-            <Submit type="submit">Sign Up</Submit>
             {duplicate ? <Error>{duplicate}</Error> : null}
+            <Submit type="submit">Sign Up</Submit>
           </Form>
           <p>
             You already have an account? <LogIn to="/login">Log In</LogIn>.
