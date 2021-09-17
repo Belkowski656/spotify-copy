@@ -15,7 +15,7 @@ This is a MERN Stack forum application that provides the main functions of spoti
 - Liking songs,
 - Playing songs,
 - Change the volume of the song played,
-- User can change password, email, profile picture and other personal informations,
+- User can change password, email and other personal informations,
 - search for songs by keyword,
 - and more
 
