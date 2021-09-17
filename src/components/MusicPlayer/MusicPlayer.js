@@ -35,7 +35,7 @@ const MusicPlayer = () => {
     }).then((res) => res.json());
 
     setAvatar(
-      require(`../src/resources/images/avatars/${result.avatar}`).default
+      require(`../../resources/images/avatars/${result.avatar}`).default
     );
   }, []);
 
