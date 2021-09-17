@@ -87,7 +87,9 @@ const Player = ({ index, play, setPlay, fetchLikedSongs }) => {
       if (songIndex >= songs.length) return setSongIndex(0);
 
       if (songs.length) {
-        setSong(`${songs[songIndex].name}`);
+        setSong(
+          require(`../../resources/music/${songs[songIndex].name}`).default
+        );
         setSongImage(
           require(`../../resources/images/${songs[songIndex].image}`).default
         );
@@ -101,7 +103,9 @@ const Player = ({ index, play, setPlay, fetchLikedSongs }) => {
       if (songIndex >= songsFromPlaylist.length) return setSongIndex(0);
 
       if (songsFromPlaylist.length) {
-        setSong(`${songsFromPlaylist[songIndex].name}`);
+        setSong(
+          require(`../../resources/music/${songs[songIndex].name}`).default
+        );
         setSongImage(
           require(`../../resources/images/${songsFromPlaylist[songIndex].image}`)
             .default
