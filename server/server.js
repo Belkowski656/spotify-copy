@@ -3,8 +3,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const multer = require("multer");
-const uuid = require("uuid").v4;
 const path = require("path");
 const cors = require("cors");
 
@@ -238,40 +236,6 @@ app.post("/songs", async (req, res) => {
     res.json(songs);
   } catch (err) {
     console.log(err);
-  }
-});
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./src/resources/images/avatars");
-  },
-  filename: (req, file, cb) => {
-    const { originalname } = file;
-    const fileName = `${uuid()}_${originalname}`;
-
-    cb(null, fileName);
-  },
-});
-
-const upload = multer({ storage });
-
-app.post("/upload", upload.single("avatar"), async (req, res) => {
-  const image = req.file.filename;
-  const token = req.body.token;
-  console.log(req.file);
-  try {
-    const user = jwt.verify(token, JWT_SECRET);
-    const _id = user.id;
-
-    await User.updateOne(
-      { _id },
-      {
-        $set: { image },
-      }
-    );
-    res.redirect("/account");
-  } catch (error) {
-    res.end({ status: "error", error: error });
   }
 });
 

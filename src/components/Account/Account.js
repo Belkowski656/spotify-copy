@@ -12,12 +12,7 @@ import {
   TableInput,
   TableRadio,
   Label,
-  InputFile,
-  InputToken,
-  Edit,
   Button,
-  Submit,
-  Form,
   ButtonEdit,
   ButtonWrapper,
 } from "./Account.style";
@@ -29,7 +24,6 @@ const Account = () => {
   const [newPassword, setNewPassword] = useState("");
   const [image, setImage] = useState({});
   const [edit, setEdit] = useState(false);
-  const [fileEdit, setFileEdit] = useState(false);
 
   const getAccountData = async () => {
     const result = await fetch("/get-account-data", {
@@ -113,33 +107,12 @@ const Account = () => {
     if (result.status === "ok") getAccountData();
   };
 
-  const handleFileChange = () => {
-    setFileEdit(true);
-  };
-
   return (
     <>
       <Wrapper bgc={bgc}></Wrapper>
       <Box>
         <Title>Account details</Title>
-        {/* <Form action="/upload" method="POST" encType="multipart/form-data"> */}
-        <Img img={image}>
-          {/* <Edit>
-              <InputFile
-                type="file"
-                name="avatar"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-            </Edit> */}
-        </Img>
-        {/* <InputToken
-          type="text"
-          defaultValue={sessionStorage.getItem("token")}
-          name="token"
-        />
-        {fileEdit ? <Submit>Save</Submit> : null} */}
-        {/* </Form> */}
+        <Img img={image}></Img>
         <Content>
           <tbody>
             {userData.length
