@@ -34,7 +34,9 @@ const MusicPlayer = () => {
       }),
     }).then((res) => res.json());
 
-    setAvatar(require(`/static/media/${result.avatar}`).default);
+    setAvatar(
+      require(`./src/resources/images/avatars/${result.avatar}`).default
+    );
   }, []);
 
   const verify = () => {
