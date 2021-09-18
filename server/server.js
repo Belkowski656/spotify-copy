@@ -48,7 +48,7 @@ app.use(
 
 app.post("/delete-song-from-playlist", async (req, res) => {
   const { songId, playlistId } = req.body;
-  console.log("xd");
+
   try {
     await Playlist.updateOne(
       { _id: playlistId },
